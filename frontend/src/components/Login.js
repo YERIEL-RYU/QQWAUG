@@ -55,7 +55,7 @@ export default function SignIn({ userLogin }) {
 
   const onLogin = () => {
     console.log(value);
-    fetch('http://localhost:8000/auth/', {
+    fetch('http://localhost:8000/auth/token/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(value),

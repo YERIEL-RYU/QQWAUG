@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import datetime, timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_jwt',
     'corsheaders',
 
     'api',
@@ -58,6 +60,15 @@ MIDDLEWARE = [
 
     'corsheaders.middleware.CorsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [  # 로그인 여부를 확인하는 클래스
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [  # 로그인과 관련된 클래스
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ],
+}
 
 ROOT_URLCONF = 'qqing.urls'
 
@@ -137,3 +148,13 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000"
 ]
+
+
+JWT_AUTH = {
+    'JWT_SECRET_KEY': SECRET_KEY,  # jwt에서 사용할 비밀키 설정 현재 django의 비밀키와 같음
+    'JWT_ALGORITHM': 'HS256',  # 암호화에서 사용되는 알고리즘 지정
+    'JWT_ALLOW_REFRESH': True,  # 토큰을 갱신 할 수 있는지 여부
+    'JWT_EXPIRATION_DELTA': timedelta(days=7),  # 토큰의 유효기간
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=28),
+    # 토큰 갱신의 유효기간 : 7일씩 4번 갱신 할 수 있고 28일 후에는 로그아웃 처리됨
+}

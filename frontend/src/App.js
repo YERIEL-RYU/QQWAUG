@@ -24,7 +24,7 @@ const App = () => {
       />
       <Route path="/join" component={Join} />
       <LayoutContainer>
-        <Router />
+        <Router token={token} />
       </LayoutContainer>
     </Switch>
   );
