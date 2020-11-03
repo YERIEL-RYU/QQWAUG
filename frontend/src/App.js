@@ -11,20 +11,15 @@ const App = () => {
   useEffect(() => {
     console.log('가자 삥삥!');
   });
-
-  const [user, setUser] = useState(null);
-  const authenticated = user != null;
-
-  const login = ({ email, password }) => setUser(signIn({ email, password }));
-  //const logout = () => setUser(null);
-
+  const [token, setToken] = useState('');
+  const userLogin = (tok) => {
+    setToken(tok);
+  };
   return (
     <Switch>
       <Route
         path="/"
-        render={(props) => (
-          <Login authenticated={authenticated} login={login} {...props} />
-        )}
+        render={(props) => <Login userLogin={userLogin} />}
         exact={true}
       />
       <Route path="/join" component={Join} />

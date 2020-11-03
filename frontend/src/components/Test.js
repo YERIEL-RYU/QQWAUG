@@ -32,11 +32,11 @@ const useStyles = makeStyles({
 });
 
 const EnginOil = () => {
-  useEffect(() => {
-    axios
-      .get('http://localhost:8000/post/list')
-      .then(({ data }) => setDatas(data));
-  }, []);
+  //   useEffect(() => {
+  //     axios
+  //       .get('http://localhost:8000/post/list')
+  //       .then(({ data }) => setDatas(data));
+  //   }, []);
   const classes = useStyles();
   const [datas, setDatas] = useState([]);
   const [DialogOpen, setOnDialogOpen] = useState(false);
@@ -54,17 +54,17 @@ const EnginOil = () => {
     },
     [value],
   );
-  const onClick = useCallback(async () => {
-    await axios
-      .post('http://localhost:8000/posts/list/create/', {
-        title: value.title,
-        content: value.content,
-        writer: value.wirter,
-      })
-      .then((response) => console.log(response));
-    await axios
-      .get('http://localhost:8000/post/list')
-      .then(({ data }) => setDatas(data));
+  const onClick = useCallback(() => {
+    // await axios
+    //   .post('http://localhost:8000/posts/list/create/', {
+    //     title: value.title,
+    //     content: value.content,
+    //     writer: value.wirter,
+    //   })
+    //   .then((response) => console.log(response));
+    // await axios
+    //   .get('http://localhost:8000/post/list')
+    //   .then(({ data }) => setDatas(data));
     setValue('');
     setOnDialogOpen(false);
   }, [value]);

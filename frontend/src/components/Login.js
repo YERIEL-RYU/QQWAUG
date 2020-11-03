@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,23 +42,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn({ authenticated, login, location }) {
+export default function SignIn({ userLogin }) {
   const classes = useStyles();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [value, setValue] = useState([]);
 
-  const onClick = () => {
-    try {
-      login({ email, password });
-    } catch (e) {
-      alert('로그인 실패');
-      setEmail('');
-      setPassword('');
-    }
+  const inputChange = useCallback(
+    (e) => {
+      setValue({ ...value, [e.target.name]: e.target.value });
+    },
+    [value],
+  );
+
+  const onLogin = () => {
+    console.log(value);
+    fetch('http://localhost:8000/auth/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(value),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        userLogin(data.token);
+      })
+      .catch((error) => console.error(error));
   };
 
-  const { from } = location.state || { from: { pathname: '/index' } };
-  if (authenticated) return <Redirect to={from} />;
+  // const { from } = location.state || { from: { pathname: '/index' } };
+  // if (authenticated) return <Redirect to={from} />;
 
   return (
     <div>
@@ -78,11 +88,11 @@ export default function SignIn({ authenticated, login, location }) {
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="username"
               label="아이디를 입력하세요."
-              name="email"
-              value={email}
-              onChange={({ target: { value } }) => setEmail(value)}
+              name="username"
+              value={value.username || ''}
+              onChange={inputChange}
               autoFocus
             />
             <TextField
@@ -94,8 +104,8 @@ export default function SignIn({ authenticated, login, location }) {
               label="비밀번호를 입력하세요"
               type="password"
               id="password"
-              value={password}
-              onChange={({ target: { value } }) => setPassword(value)}
+              value={value.password || ''}
+              onChange={inputChange}
               autoComplete="false"
             />
             <Button
@@ -103,7 +113,7 @@ export default function SignIn({ authenticated, login, location }) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={onClick}
+              onClick={onLogin}
             >
               로그인
             </Button>
