@@ -14,3 +14,6 @@ class Mycar(models.Model):
     car_oil = models.CharField(
         max_length=100, null=True, blank=True, choices=CHOICE)
     car_number = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.car_oil

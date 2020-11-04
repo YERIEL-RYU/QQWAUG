@@ -15,14 +15,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Mycar',
+            name='Oil',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('car_company', models.CharField(blank=True, max_length=100, null=True)),
-                ('car_name', models.CharField(blank=True, max_length=100, null=True)),
-                ('car_old', models.IntegerField(blank=True, null=True)),
-                ('car_oil', models.CharField(blank=True, choices=[('Gasoline', 'Gasoline'), ('Diesel', 'Diesel'), ('Gas', 'Gas')], max_length=100, null=True)),
-                ('car_number', models.CharField(blank=True, max_length=100, null=True)),
+                ('oil_date', models.DateField()),
+                ('oil_liter', models.IntegerField()),
+                ('oil_price', models.IntegerField()),
+                ('oil_total', models.IntegerField()),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

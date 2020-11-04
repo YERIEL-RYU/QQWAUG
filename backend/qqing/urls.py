@@ -5,9 +5,8 @@ from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('auth/token', obtain_jwt_token),
-    path('auth/token/verify', verify_jwt_token),
-    path('auth/token/refresh', refresh_jwt_token),
+    path('auth/token/', obtain_jwt_token),  # 토큰 발급
+    path('auth/token/verify/', verify_jwt_token),  # 토큰 확인
+    path('auth/token/refresh/', refresh_jwt_token),  # 토큰 재발급
     path('mycar/', include('mycar.urls'))
 ]
