@@ -16,4 +16,4 @@ class Mycar(models.Model):
     car_number = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.car_oil
+        return str(self.author)+"_"+self.car_number

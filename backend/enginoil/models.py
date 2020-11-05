@@ -7,3 +7,6 @@ class EnginOil(models.Model):
     enginoil_img = models.ImageField(blank=True, upload_to='enginoil/img')
     center = models.CharField(max_length=100, null=False)
     change_km = models.IntegerField(null=False)
+
+    def __str__(self):
+        return str(self.author)+"_"+str(self.change_date)

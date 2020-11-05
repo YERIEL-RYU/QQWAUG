@@ -12,9 +12,9 @@ from .serializers import MycarSerializer
 
 class MycarList(APIView):
     # 조회
-    @permission_classes((IsAuthenticated,))
+    # @permission_classes((IsAuthenticated,))
     @authentication_classes((JSONWebTokenAuthentication,))
     def get(self, requset):
         queryset = Mycar.objects.all()
-        serializer = MycarSerializer()
+        serializer = MycarSerializer(queryset, many=True)
         return Response(serializer.data)

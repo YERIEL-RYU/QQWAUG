@@ -39,14 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'rest_framework_jwt',
     'corsheaders',
 
     'api',
     'mycar',
     'oil',
-    'enginoil'
+    'enginoil',
+    'profiles'
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,7 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [  # 로그인 여부를 확인하는 클래스
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [  # 로그인과 관련된 클래스
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
