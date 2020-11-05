@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { myCar, oil, addMyCar, enginOil, myPage, test } from './index';
+import { myCar, oil, addMyCar, enginOil, myPage } from './index';
 
 const routes = () => (
   <Switch>
@@ -9,7 +9,6 @@ const routes = () => (
     <Route path="/mycar" component={addMyCar} />
     <Route path={`/enginoil/:pageNumber`} component={enginOil} />
     <Route path="/mypage" component={myPage} />
-    <Route path="/test" component={test} />
   </Switch>
 );
 

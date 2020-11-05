@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Login from './components/Login';
+import Login from './components/Login/LoginContainer';
 import Join from './components/join/Join';
 import { Route, Switch } from 'react-router-dom';
 import { signIn } from './components/auth';
