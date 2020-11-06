@@ -7,7 +7,7 @@ class Mycar(models.Model):
         ('Diesel', 'Diesel'),
         ('Gas', 'Gas')
     )
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    author = models.ForeignKey('user.User', on_delete=models.CASCADE)
     car_company = models.CharField(max_length=100, null=True, blank=True)
     car_name = models.CharField(max_length=100, null=True, blank=True)
     car_old = models.IntegerField(null=True, blank=True)

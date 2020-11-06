@@ -42,7 +42,7 @@ class Profiles(models.Model):
         ('incheon', '인천'),
         ('busan', '부산')
     )
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    author = models.ForeignKey('user.User', on_delete=models.CASCADE)
     profile_img = models.ImageField(
         upload_to=user_directory_path, null=True, blank=True)
     profile_region = models.CharField(

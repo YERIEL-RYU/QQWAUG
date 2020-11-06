@@ -43,11 +43,10 @@ INSTALLED_APPS = [
     'rest_framework_jwt',
     'corsheaders',
 
-    'api',
+    'user',
     'mycar',
     'oil',
     'enginoil',
-    'profiles'
 ]
 
 MIDDLEWARE = [
@@ -64,10 +63,11 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [  # 로그인 여부를 확인하는 클래스
-        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [  # 로그인과 관련된 클래스
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ],
 }
 
@@ -147,7 +147,8 @@ STATIC_URL = '/static/'
 
 # CORS_HEADES 설정
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000"
+    'http://localhost:3000',
+    'http://localhost:8000',
 ]
 
 
@@ -159,3 +160,5 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=28),
     # 토큰 갱신의 유효기간 : 7일씩 4번 갱신 할 수 있고 28일 후에는 로그아웃 처리됨
 }
+
+AUTH_USER_MODEL = 'user.User'
