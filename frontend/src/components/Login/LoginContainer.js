@@ -1,28 +1,23 @@
 import React, { useCallback, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginRequest } from '../../store/reducers/auth';
 
 import LoginPresenter from './LoginPresenter';
 
-const LoginContainer = ({ userLogin }) => {
+const LoginContainer = () => {
   const [value, setValue] = useState([]);
+  const dispatch = useDispatch();
   const onInputChange = useCallback(
     (e) => {
       setValue({ ...value, [e.target.name]: e.target.value });
     },
     [value],
   );
-  const onLogin = () => {
-    console.log(value);
-    fetch('http://localhost:8000/auth/token/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(value),
-    })
-      .then((data) => data.json())
-      .then((data) => {
-        userLogin(data.token);
-      })
-      .catch((error) => console.error(error));
-  };
+  const onLogin = useCallback(
+    () => dispatch(loginRequest(value.username, value.password)),
+    [dispatch, value],
+  );
+
   return (
     <LoginPresenter
       onInputChange={onInputChange}

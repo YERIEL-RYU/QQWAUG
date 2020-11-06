@@ -15,7 +15,7 @@ const EnginOilInputContainer = ({ classes }) => {
   const onClick = useCallback(() => {
     setInputValue('');
     setOnDialogOpen(false);
-  }, [inputValue]);
+  }, []);
   const onDialogOpen = () => {
     setOnDialogOpen(true);
   };
