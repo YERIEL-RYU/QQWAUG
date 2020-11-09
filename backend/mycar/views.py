@@ -15,6 +15,6 @@ class MycarList(APIView):
     @permission_classes((IsAuthenticated,))
     @authentication_classes((JSONWebTokenAuthentication))
     def get(self, requset):
-        queryset = Mycar.objects.all()
+        queryset = Mycar.objects.get(author='user3')
         serializer = MycarSerializer(queryset, many=True)
         return Response(serializer.data)
