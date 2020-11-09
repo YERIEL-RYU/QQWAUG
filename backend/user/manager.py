@@ -1,4 +1,4 @@
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.base_user import BaseUserManager
 
 
 class UserManager(BaseUserManager):
@@ -23,14 +23,12 @@ class UserManager(BaseUserManager):
     def create_user(self, userid, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('grade', 'USER')
         return self._create_user(userid, password, **extra_fields)
 
     def create_superuser(self, userid, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('grade', 'SUPERUSER')
 
         if extra_fields.get('is_staff') is not True:

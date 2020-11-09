@@ -5,13 +5,13 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.base_user import AbstractBaseUser
 
 from .manager import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    objects = UserManager()
     GRADE = (
         ('SUPERUSER', 'SUPERUSER'),
         ('USER', 'USER')
@@ -23,6 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=False,
         unique=True
     )
+    password = models.CharField(_('password'), max_length=128)
     username = models.CharField(
         verbose_name='사용자 이름',
         max_length=255,
@@ -40,14 +41,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=GRADE,
         default='USER'
     )
-    secret = models.UUIDField(default=uuid.uuid4)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'userid'
     REQUIRED_FIELDS = ['username']
+
+    objects = UserManager()
 
     def __str__(self):
         return self.userid

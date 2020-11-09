@@ -7,8 +7,16 @@ from rest_framework_jwt.serializers import JSONWebTokenSerializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'password']
+        fields = ['id', 'userid', 'password']
         extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User(
+            userid=validated_data['userid'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 
 class SignupSerializer(serializers.ModelSerializer):
