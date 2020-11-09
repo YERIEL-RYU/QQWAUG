@@ -45,7 +45,7 @@ const MyCar = () => {
         <TableHead>
           <TableRow>
             <TableCell colSpan={2} align="center">
-              <h2>차량정보</h2>
+              <h2>{localStorage.getItem('userid')} 님의 차량정보</h2>
             </TableCell>
           </TableRow>
         </TableHead>

@@ -36,6 +36,7 @@ const LayoutPresenter = ({
   anchorEl,
   onMenuOpen,
   onMenuClose,
+  onLogout,
   //sidebar
   secMenu,
   secMenuOpen,
@@ -53,6 +54,7 @@ const LayoutPresenter = ({
           anchorEl={anchorEl}
           onMenuOpen={onMenuOpen}
           onMenuClose={onMenuClose}
+          onLogout={onLogout}
         />
         <Sidebar
           drawerState={drawerState}

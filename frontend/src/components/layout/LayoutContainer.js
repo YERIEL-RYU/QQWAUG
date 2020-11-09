@@ -10,6 +10,7 @@ import {
 } from '../../store/reducers/layout';
 import LayoutPresenter from './LayoutPresenter';
 import Router from '../../routes/routes';
+import { logoutRequest } from '../../store/reducers/auth';
 
 const LayoutContainer = () => {
   const { drawerState, anchorEl, secMenuOpen, secMenu } = useSelector(
@@ -29,6 +30,7 @@ const LayoutContainer = () => {
     dispatch,
   ]);
   const onMenuClose = useCallback(() => dispatch(menuClose()), [dispatch]);
+  const onLogout = useCallback(() => dispatch(logoutRequest()), [dispatch]);
   //sidebar
   const onSecMenuToggle = useCallback(() => dispatch(secMenuToggle()), [
     dispatch,
@@ -47,6 +49,7 @@ const LayoutContainer = () => {
       anchorEl={anchorEl}
       onMenuOpen={onMenuOpen}
       onMenuClose={onMenuClose}
+      onLogout={onLogout}
       //sidebar
       secMenuOpen={secMenuOpen}
       secMenu={secMenu}

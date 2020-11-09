@@ -4,20 +4,26 @@ import Join from './components/join/Join';
 import { Route, Switch } from 'react-router-dom';
 import Router from './routes/routes';
 import LayoutContainer from './components/layout/LayoutContainer';
-require('dotenv').config();
+import { useSelector } from 'react-redux';
 
 const App = () => {
   useEffect(() => {
     console.log('가자 삥삥!');
   });
+  const isLoggedIn = useSelector((state) => state.auth.status.isLoggedIn);
   return (
-    <Switch>
-      <Route path="/" component={Login} exact={true} />
-      <Route path="/join" component={Join} />
-      <LayoutContainer>
-        <Router />
-      </LayoutContainer>
-    </Switch>
+    <>
+      {isLoggedIn ? (
+        <LayoutContainer>
+          <Router />
+        </LayoutContainer>
+      ) : (
+        <Switch>
+          <Route path="/" component={Login} exact={true} />
+          <Route path="/join" component={Join} />
+        </Switch>
+      )}
+    </>
   );
 };
 

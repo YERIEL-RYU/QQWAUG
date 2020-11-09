@@ -61,6 +61,7 @@ const Header = ({
   anchorEl,
   onMenuOpen,
   onMenuClose,
+  onLogout,
 }) => {
   const classes = useStyles();
   //My page click event
@@ -95,7 +96,7 @@ const Header = ({
                 <Menu anchorEl={anchorEl} onMenuClose={onMenuClose} />
               </Grid>
               <Grid item>
-                <Button color="inherit" href="/">
+                <Button color="inherit" onClick={onLogout}>
                   로그아웃
                 </Button>
               </Grid>

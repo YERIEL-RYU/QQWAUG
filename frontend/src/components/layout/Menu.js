@@ -37,7 +37,7 @@ export default function CustomizedMenus(props) {
       onClose={onMenuClose}
     >
       <MenuItem>
-        <Link to="/">
+        <Link to="/mypage">
           <ListItemText primary="My page" />
         </Link>
       </MenuItem>

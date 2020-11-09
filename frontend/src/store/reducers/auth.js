@@ -4,13 +4,14 @@ import axios from 'axios';
 const LOGIN = '/auth/LOGIN';
 const LOGIN_SUCCESS = '/auth/LOGIN_SUCCESS';
 const LOGIN_FAILURE = '/auth/LOGIN_FAILURE';
+const LOGOUT = 'auth/LOGOUT';
 
 const REGISTER = '/auth/REGISTER';
 const REGISTER_SUCCESS = '/auth/REGISTER_SUCCESS';
 const REGISTER_FAILURE = '/auth/REGISTER_FAILURE';
 
-const instnace = axios.create({
-  baseURI: 'http://localhost:8000',
+const api = axios.create({
+  baseURI: 'http://localhost:8000/',
 });
 
 //action 함수
@@ -26,22 +27,25 @@ export const loginFailure = (error) => ({
   type: LOGIN_FAILURE,
   error,
 });
-export const loginRequest = (username, password) => {
-  console.log(username, password, 'store reducers auth.js');
+export const logout = () => ({
+  type: LOGOUT,
+  isLoggedIn: false,
+});
+export const loginRequest = (userid, password) => {
   return (disapth) => {
     disapth(login());
-    axios
-      .post('http://localhost:8000/auth/token/', {
-        username,
+    api
+      .post('http://localhost:8000/users/login/', {
+        userid,
         password,
       })
       .then((response) => response.data)
-      .then(({ token, refresh, author, username }) => {
+      .then(({ token, refresh, author, userid }) => {
         localStorage.setItem('token', token);
-        localStorage.setItem('refresh', refresh);
-        localStorage.setItem('author', author);
-        localStorage.setItem('username', username);
-        disapth(loginSuccess(token, refresh));
+        // localStorage.setItem('refresh', refresh);
+        // localStorage.setItem('author', author);
+        localStorage.setItem('userid', userid);
+        disapth(loginSuccess(token));
       })
       .catch((error) => {
         if (error.response) {
@@ -69,6 +73,12 @@ export const loginRequest = (username, password) => {
       });
   };
 };
+export const logoutRequest = () => {
+  return (disapth) => {
+    disapth(logout());
+    window.localStorage.clear();
+  };
+};
 
 //초기 상태
 const initialState = {
@@ -92,7 +102,6 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         access: action.access,
-        refresh: action.refresh,
         status: {
           isLoggedIn: true,
         },
@@ -102,6 +111,15 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        access: null,
+        refresh: null,
+        status: {
+          isLoggedIn: action.isLoggedIn,
+        },
       };
     default:
       return state;
