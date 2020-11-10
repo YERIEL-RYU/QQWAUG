@@ -6,7 +6,7 @@ from django.contrib.auth.admin import UserAdmin
 
 
 @admin.register(User)
-class UserAdmin(UserAdmin):
+class UsersAdmin(UserAdmin):
     list_display = ['userid', 'username', 'useremail']
     list_display_links = ['userid', 'username']
     list_filter = ['is_superuser']
@@ -21,4 +21,5 @@ class UserAdmin(UserAdmin):
 
 @admin.register(Profiles)
 class ProfilesAdmin(admin.ModelAdmin):
-    list_display = ['id', 'author', 'profile_region', 'profile_img', ]
+    list_display = ['id', 'author',
+                    'profile_region', 'image_tag', 'profile_img']

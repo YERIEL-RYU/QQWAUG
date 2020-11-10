@@ -1,12 +1,13 @@
 import datetime
 import os
-import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.utils.html import format_html
+
 
 from .manager import UserManager
 
@@ -23,7 +24,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=False,
         unique=True
     )
-    password = models.CharField(_('password'), max_length=128)
     username = models.CharField(
         verbose_name='사용자 이름',
         max_length=255,
@@ -91,11 +91,22 @@ class Profiles(models.Model):
         ('incheon', '인천'),
         ('busan', '부산')
     )
+    GENDER = (
+        ('F', 'F'),
+        ('M', 'M')
+    )
     author = models.ForeignKey('user.User', on_delete=models.CASCADE)
     profile_img = models.ImageField(
         upload_to=user_directory_path, null=True, blank=True)
     profile_region = models.CharField(
         max_length=100, blank=True, choices=REGION)
+    profile_gender = models.CharField(
+        max_length=100, choices=GENDER, default=''
+    )
 
     def __str__(self):
         return str(self.author)+'_profiles'
+
+    def image_tag(self):
+        return format_html('<img src="{}" height="50"/>'.format(self.profile_img.url))
+    image_tag.short_description = 'Profiles'

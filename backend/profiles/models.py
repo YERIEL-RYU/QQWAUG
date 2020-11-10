@@ -42,11 +42,16 @@ class Profiles(models.Model):
         ('incheon', '인천'),
         ('busan', '부산')
     )
+    GENDER = (
+        ('F', 'F'),
+        ('M', 'M')
+    )
     author = models.ForeignKey('user.User', on_delete=models.CASCADE)
     profile_img = models.ImageField(
         upload_to=user_directory_path, null=True, blank=True)
     profile_region = models.CharField(
         max_length=100, blank=True, choices=REGION)
+    profile_gender = models.CharField(max_length=30, choices=GENDER)
 
     def __str__(self):
         return str(self.author)+'_profiles'
