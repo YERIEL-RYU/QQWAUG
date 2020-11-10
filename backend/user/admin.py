@@ -6,7 +6,7 @@ from django.contrib.auth.admin import UserAdmin
 
 
 @admin.register(User)
-class UsersAdmin(UserAdmin):
+class UsersAdmin(admin.ModelAdmin):
     list_display = ['userid', 'username', 'useremail']
     list_display_links = ['userid', 'username']
     list_filter = ['is_superuser']
@@ -16,6 +16,12 @@ class UsersAdmin(UserAdmin):
                                          )}),
         (_('Permissions'), {'fields': ('grade', 'is_active')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('userid', 'password1', 'password2'),
+        }),
     )
 
 

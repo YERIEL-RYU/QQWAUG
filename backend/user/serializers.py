@@ -2,7 +2,8 @@ from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import update_last_login
-from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
 from .models import User
 
 User = get_user_model()
@@ -25,6 +26,26 @@ class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = User
 #         fields = ('userid', 'username', 'useremail', 'password')
+
+class UserCreateSerializer(serializers.Serializer):
+    class Meta:
+        model = User
+
+    userid = serializers.CharField(required=True)
+    username = serializers.CharField(required=True)
+    useremail = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True)
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            userid=validated_data['userid'],
+            username=validated_data['username'],
+            useremail=validated_data['useremail'],
+        )
+        user.set_password(validated_data['password'])
+
+        user.save()
+        return user
 
 
 JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
