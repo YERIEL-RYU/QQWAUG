@@ -8,13 +8,15 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Mycar
 from .serializers import MycarSerializer
+from user.models import User
 
 
 class MycarList(APIView):
     # 조회
     @permission_classes((IsAuthenticated,))
     @authentication_classes((JSONWebTokenAuthentication))
-    def get(self, requset):
-        queryset = Mycar.objects.get(author='user3')
-        serializer = MycarSerializer(queryset, many=True)
+    def get(self, requset, userid):
+        getuserid = User.objects.get(userid=userid)
+        queryset = Mycar.objects.get(author=getuserid)
+        serializer = MycarSerializer(queryset)
         return Response(serializer.data)
