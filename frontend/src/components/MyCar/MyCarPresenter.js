@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,8 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
-import axios from 'axios';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -30,30 +28,10 @@ const tableStyle = makeStyles({
     textAlign: 'center',
   },
 });
-const MyCar = () => {
-  useEffect(() => {
-    const userid = localStorage.getItem('userid');
-    const token = localStorage.getItem('token');
-    axios
-      .get(`http://localhost:8000/mycar/${userid}/`, {
-        headers: {
-          Authorization: 'JWT ' + token,
-        },
-      })
-      .then((response) => response.data)
-      .then(({ car_company }) => console.log(car_company))
-      .catch((error) => console.log(error.response));
-  });
+
+const MyCarPresenter = ({ mycar }) => {
   const classes = tableStyle();
-  const [myCar, setMyCar] = useState([
-    {
-      carMaker: '',
-      carName: '',
-      carYear: '',
-      oilKind: '',
-      carNum: '',
-    },
-  ]);
+  console.log(mycar);
   return (
     <TableContainer className={classes.container} component={Paper}>
       <Table className={classes.table} aria-label="customized table">
@@ -64,51 +42,51 @@ const MyCar = () => {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        {/* <TableBody>
           <StyledTableRow>
             <TableCell className={classes.cell}>제조사</TableCell>
-            {myCar[0].carMaker === '' ? (
+            {mycar.carCompany === '' ? (
               <TableCell align="center">등록 된 정보가 없습니다.</TableCell>
             ) : (
-              <TableCell align="center">{myCar[0].carMaker}</TableCell>
+              <TableCell align="center">{mycar.carCompany}</TableCell>
             )}
           </StyledTableRow>
           <StyledTableRow>
             <TableCell className={classes.cell}>차 종</TableCell>
-            {myCar[0].carName === '' ? (
+            {mycar.carName === '' ? (
               <TableCell align="center">등록 된 정보가 없습니다.</TableCell>
             ) : (
-              <TableCell align="center">{myCar[0].carName}</TableCell>
+              <TableCell align="center">{mycar.carName}</TableCell>
             )}
           </StyledTableRow>
           <StyledTableRow>
             <TableCell className={classes.cell}>연식</TableCell>
-            {myCar[0].carYear === '' ? (
+            {mycar.carOld === '' ? (
               <TableCell align="center">등록 된 정보가 없습니다.</TableCell>
             ) : (
-              <TableCell align="center">{myCar[0].carYear}</TableCell>
+              <TableCell align="center">{mycar.carOld}</TableCell>
             )}
           </StyledTableRow>
           <StyledTableRow>
             <TableCell className={classes.cell}>유종</TableCell>
-            {myCar[0].oilKind === '' ? (
+            {mycar.carOil === '' ? (
               <TableCell align="center">등록 된 정보가 없습니다.</TableCell>
             ) : (
-              <TableCell align="center">{myCar[0].oilKind}</TableCell>
+              <TableCell align="center">{mycar.carOil}</TableCell>
             )}
           </StyledTableRow>
           <StyledTableRow>
             <TableCell className={classes.cell}>차량번호</TableCell>
-            {myCar[0].carNum === '' ? (
+            {mycar.carNumber === '' ? (
               <TableCell align="center">등록 된 정보가 없습니다.</TableCell>
             ) : (
-              <TableCell align="center">{myCar[0].carNum}</TableCell>
+              <TableCell align="center">{mycar.carNumber}</TableCell>
             )}
           </StyledTableRow>
-        </TableBody>
+        </TableBody> */}
       </Table>
     </TableContainer>
   );
 };
 
-export default MyCar;
+export default MyCarPresenter;

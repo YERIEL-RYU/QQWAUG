@@ -32,8 +32,8 @@ export const logout = () => ({
   isLoggedIn: false,
 });
 export const loginRequest = (userid, password) => {
-  return (disapth) => {
-    disapth(login());
+  return (dispatch) => {
+    dispatch(login());
     api
       .post('http://localhost:8000/users/login/', {
         userid,
@@ -45,37 +45,37 @@ export const loginRequest = (userid, password) => {
         // localStorage.setItem('refresh', refresh);
         // localStorage.setItem('author', author);
         localStorage.setItem('userid', userid);
-        disapth(loginSuccess(token));
+        dispatch(loginSuccess(token));
       })
       .catch((error) => {
         if (error.response) {
           const { status } = error.response;
           switch (status) {
             case 400:
-              disapth(loginFailure(error));
+              dispatch(loginFailure(error));
               break;
 
             case 404:
-              disapth(loginFailure());
+              dispatch(loginFailure());
               break;
 
             case 500:
-              disapth(loginFailure());
+              dispatch(loginFailure());
               break;
 
             default:
-              disapth(loginFailure());
+              dispatch(loginFailure());
               break;
           }
         } else {
-          disapth(loginFailure());
+          dispatch(loginFailure());
         }
       });
   };
 };
 export const logoutRequest = () => {
-  return (disapth) => {
-    disapth(logout());
+  return (dispatch) => {
+    dispatch(logout());
     window.localStorage.clear();
   };
 };
@@ -101,7 +101,7 @@ const auth = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        access: action.access,
+        token: action.token,
         status: {
           isLoggedIn: true,
         },
@@ -115,7 +115,7 @@ const auth = (state = initialState, action) => {
     case LOGOUT:
       return {
         ...state,
-        access: null,
+        token: null,
         refresh: null,
         status: {
           isLoggedIn: action.isLoggedIn,
