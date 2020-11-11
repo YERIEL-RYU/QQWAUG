@@ -28,8 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
 #         fields = ('userid', 'username', 'useremail', 'password')
 
 class UserCreateSerializer(serializers.Serializer):
-    class Meta:
-        model = User
 
     userid = serializers.CharField(required=True)
     username = serializers.CharField(required=True)

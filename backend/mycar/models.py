@@ -16,5 +16,7 @@ class Mycar(models.Model):
         max_length=100, null=True, blank=True, choices=CHOICE)
     car_number = models.CharField(max_length=100, null=True, blank=True)
 
+    objects = models.Manager()
+
     def __str__(self):
         return str(self.author)+"_"+self.car_number

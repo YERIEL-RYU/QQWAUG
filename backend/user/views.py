@@ -7,6 +7,9 @@ from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from .serializers import UserLoginSerializer, UserCreateSerializer
 from .permissions import IsUserOrReadOnly
 from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 # class UserViewSet(viewsets.ModelViewSet):
