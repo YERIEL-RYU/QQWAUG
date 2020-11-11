@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
   section: {
     width: '90%',
     alignContent: 'center',
-    alignSelf: 'center',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: theme.spacing(5),
     marginTop: theme.spacing(5),
     minHeight: '300px',
+    textAlign: 'center',
   },
 }));
 const MyPagePresenter = () => {
@@ -112,7 +112,7 @@ const MyPagePresenter = () => {
               alignItems="center"
             >
               <Grid item xs={3}>
-                <label>아이디</label>
+                <label>지역</label>
               </Grid>
               <Grid item>
                 <span>dddd</span>
@@ -126,7 +126,7 @@ const MyPagePresenter = () => {
               alignItems="center"
             >
               <Grid item xs={3}>
-                <label>이름</label>
+                <label>성별</label>
               </Grid>
               <Grid item>
                 <span>dddd</span>
@@ -140,24 +140,10 @@ const MyPagePresenter = () => {
               alignItems="center"
             >
               <Grid item xs={3}>
-                <label>휴대전화번호</label>
+                <label>이미지</label>
               </Grid>
               <Grid item>
-                <span></span>
-              </Grid>
-            </Grid>
-            <Divider />
-            <Grid
-              container
-              justify="flex-start"
-              spacing={3}
-              alignItems="center"
-            >
-              <Grid item xs={3}>
-                <label>이메일</label>
-              </Grid>
-              <Grid item>
-                <span>dddd</span>
+                <img />
               </Grid>
             </Grid>
           </Paper>

@@ -41,9 +41,19 @@ const MyCar = () => {
         },
       })
       .then((response) => response.data)
-      .then(({ car_company }) => console.log(car_company))
+      .then(({ car_company, car_name, car_oil, car_old, car_number }) =>
+        setMyCar([
+          {
+            carMaker: car_company,
+            carName: car_name,
+            carYear: car_oil,
+            oilKind: car_old,
+            carNum: car_number,
+          },
+        ]),
+      )
       .catch((error) => console.log(error.response));
-  });
+  }, []);
   const classes = tableStyle();
   const [myCar, setMyCar] = useState([
     {

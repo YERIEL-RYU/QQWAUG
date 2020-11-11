@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Login from './components/Login/LoginContainer';
 import Join from './components/join/Join';
-import { Route, Switch } from 'react-router-dom';
-import Router from './routes/routes';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Routes from './routes/routes';
 import LayoutContainer from './components/layout/LayoutContainer';
 import { useSelector } from 'react-redux';
 
@@ -15,12 +15,13 @@ const App = () => {
     <>
       {isLoggedIn ? (
         <LayoutContainer>
-          <Router />
+          <Routes />
         </LayoutContainer>
       ) : (
         <Switch>
           <Route path="/" component={Login} exact={true} />
           <Route path="/join" component={Join} />
+          <Redirect from="*" to="/" />
         </Switch>
       )}
     </>

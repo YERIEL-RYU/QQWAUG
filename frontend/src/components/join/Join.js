@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import JoinForm from './JoinForm';
 import Profile from './Profile';
 import { makeStyles } from '@material-ui/core/styles';
@@ -49,12 +49,12 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['회원가입', '프로필 작성'];
 
-const getStepContent = (step, value, onChange) => {
+const getStepContent = (step, joinValue, profileValue, onChange) => {
   switch (step) {
     case 0:
-      return <JoinForm value={value} onChange={onChange} />;
+      return <JoinForm joinValue={joinValue} onChange={onChange} />;
     case 1:
-      return <Profile value={value} onChange={onChange} />;
+      return <Profile profileValue={profileValue} onChange={onChange} />;
 
     default:
       throw new Error('Unknoew step');
@@ -62,12 +62,6 @@ const getStepContent = (step, value, onChange) => {
 };
 
 const Join = () => {
-  const [user, setUser] = React.useState([
-    {
-      userid: '',
-      userPw: '',
-    },
-  ]);
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const onNext = () => {
@@ -76,25 +70,27 @@ const Join = () => {
   const onBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const [value, setValue] = React.useState([]);
-  const onChange = React.useCallback(
+  const [joinValue, setJoinValue] = useState([]);
+  const [profileValue, setProfileValue] = useState([]);
+  const onChange = useCallback(
     (e) => {
-      setValue({ ...value, [e.target.name]: e.target.value });
-      console.log(value);
+      if (activeStep === 0) {
+        setJoinValue({ ...joinValue, [e.target.name]: e.target.value });
+        console.log(joinValue);
+      } else {
+        setProfileValue({ ...profileValue, [e.target.name]: e.target.value });
+        console.log(profileValue);
+      }
     },
-    [value],
+    [joinValue, profileValue, activeStep],
   );
-  const onSubmit = React.useCallback(
+  const onSubmit = useCallback(
     (e) => {
-      console.log(value, 'onSubmit');
-      setUser(user.concat(value));
-      setValue([]);
+      console.log(joinValue, profileValue, 'onSubmit');
       e.preventDefault();
-      console.log(user, 'onSubmit');
     },
-    [value, user],
+    [joinValue],
   );
-  console.log(user, 'join');
   return (
     <Fragment>
       <CssBaseline />
@@ -125,22 +121,48 @@ const Join = () => {
               </Fragment>
             ) : (
               <form onSubmit={onSubmit}>
-                {getStepContent(activeStep, value, onChange)}
+                {getStepContent(activeStep, joinValue, profileValue, onChange)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
-                    <Button onClick={onBack} className={classes.button}>
+                    <Button
+                      variant="contained"
+                      onClick={onBack}
+                      color="default"
+                      className={classes.button}
+                    >
                       이전
                     </Button>
                   )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onNext}
-                    className={classes.button}
-                    type="submit"
-                  >
-                    {activeStep === steps.length - 1 ? '회원가입' : '다음'}
-                  </Button>
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={onNext}
+                      className={classes.button}
+                      type="submit"
+                    >
+                      회원가입
+                    </Button>
+                  ) : joinValue.userId === '' ||
+                    joinValue.userId === undefined ? (
+                    <Button
+                      variant="contained"
+                      disabled
+                      className={classes.button}
+                    >
+                      다음
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={onNext}
+                      className={classes.button}
+                      type="submit"
+                    >
+                      다음
+                    </Button>
+                  )}
                 </div>
               </form>
             )}
