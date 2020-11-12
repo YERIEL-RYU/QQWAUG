@@ -2,23 +2,26 @@ import React from 'react';
 import { Grid, TextField, Typography } from '@material-ui/core';
 
 const JoinForm = (props) => {
-  const { joinValue, onChange } = props;
+  const { joinValue, onChange, onUseridChange } = props;
   return (
     <>
-      <Typography variant="h6" gutterBottom>
-        회원가입
+      <Typography variant="h5" gutterBottom align="center">
+        회원가입*
+      </Typography>
+      <Typography variant="subtitle2" align="center">
+        아래 항목은 필수 입력입니다.
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
+            required
             id="userId"
             name="userId"
             label="아이디를 입력하세요"
             fullWidth
-            onChange={onChange}
+            onChange={onUseridChange}
             value={joinValue.userId || ''}
             error={joinValue.userId === '' ? true : false}
-            helperText="아이디는 필수 입력입니다."
           />
         </Grid>
         <Grid item xs={12}>

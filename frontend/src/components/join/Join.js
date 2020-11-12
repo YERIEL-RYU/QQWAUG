@@ -9,6 +9,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -49,10 +50,22 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['회원가입', '프로필 작성'];
 
-const getStepContent = (step, joinValue, profileValue, onChange) => {
+const getStepContent = (
+  step,
+  joinValue,
+  profileValue,
+  onChange,
+  onUseridChange,
+) => {
   switch (step) {
     case 0:
-      return <JoinForm joinValue={joinValue} onChange={onChange} />;
+      return (
+        <JoinForm
+          joinValue={joinValue}
+          onChange={onChange}
+          onUseridChange={onUseridChange}
+        />
+      );
     case 1:
       return <Profile profileValue={profileValue} onChange={onChange} />;
 
@@ -64,14 +77,14 @@ const getStepContent = (step, joinValue, profileValue, onChange) => {
 const Join = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const [joinValue, setJoinValue] = useState([]);
+  const [profileValue, setProfileValue] = useState([]);
   const onNext = () => {
     setActiveStep(activeStep + 1);
   };
   const onBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const [joinValue, setJoinValue] = useState([]);
-  const [profileValue, setProfileValue] = useState([]);
   const onChange = useCallback(
     (e) => {
       if (activeStep === 0) {
@@ -84,12 +97,50 @@ const Join = () => {
     },
     [joinValue, profileValue, activeStep],
   );
+  const onUseridChange = useCallback(
+    (e) => {
+      setJoinValue({ ...joinValue, [e.target.name]: e.target.value });
+      const userid = e.target.value;
+      console.log(userid);
+      axios
+        .get(`http://localhost:8000/users/duplicate/${userid}`)
+        .then((response) => {
+          const status = response.status;
+          if (status === 200) {
+            console.log('zz');
+          }
+        })
+        .catch((error) => {
+          const status = error.response.status;
+          if (status === 409) {
+            window.alert('이미 있는 아이디');
+          } else {
+            window.alert('아이디 입력 ㄱㄱ');
+          }
+        });
+    },
+    [joinValue],
+  );
   const onSubmit = useCallback(
     (e) => {
       console.log(joinValue, profileValue, 'onSubmit');
-      e.preventDefault();
+      const { userId, userPw, userName, userEmail } = joinValue;
+      axios
+        .post('http://localhost:8000/users/create/', {
+          userid: userId,
+          password: userPw,
+          username: userName,
+          useremail: userEmail,
+        })
+        .then((response) => {
+          console.log(response.status);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+      onNext();
     },
-    [joinValue],
+    [joinValue, activeStep],
   );
   return (
     <Fragment>
@@ -120,8 +171,14 @@ const Join = () => {
                 </Button>
               </Fragment>
             ) : (
-              <form onSubmit={onSubmit}>
-                {getStepContent(activeStep, joinValue, profileValue, onChange)}
+              <form>
+                {getStepContent(
+                  activeStep,
+                  joinValue,
+                  profileValue,
+                  onChange,
+                  onUseridChange,
+                )}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button
@@ -137,14 +194,20 @@ const Join = () => {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={onNext}
+                      onClick={onSubmit}
                       className={classes.button}
-                      type="submit"
+                      type="button"
                     >
                       회원가입
                     </Button>
                   ) : joinValue.userId === '' ||
-                    joinValue.userId === undefined ? (
+                    joinValue.userId === undefined ||
+                    joinValue.userPw === '' ||
+                    joinValue.userPw === undefined ||
+                    joinValue.userName === '' ||
+                    joinValue.userName === undefined ||
+                    joinValue.userEmail === '' ||
+                    joinValue.userEmail === undefined ? (
                     <Button
                       variant="contained"
                       disabled
@@ -158,7 +221,7 @@ const Join = () => {
                       color="primary"
                       onClick={onNext}
                       className={classes.button}
-                      type="submit"
+                      type="button"
                     >
                       다음
                     </Button>

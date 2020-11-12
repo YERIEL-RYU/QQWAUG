@@ -5,7 +5,6 @@ import {
   Input,
   Typography,
   InputLabel,
-  NativeSelect,
   Select,
   MenuItem,
 } from '@material-ui/core';
@@ -27,6 +26,12 @@ const Profile = ({ profileValue, onChange }) => {
   };
   return (
     <Fragment>
+      <Typography variant="h5" gutterBottom align="center">
+        프로필 작성
+      </Typography>
+      <Typography variant="subtitle2" align="center">
+        아래 항목은 선택 입력입니다.
+      </Typography>
       <Grid container={true} spacing={3}>
         <Grid item xs={6}>
           <label>프로필 사진</label>
