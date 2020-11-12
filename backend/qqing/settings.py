@@ -69,6 +69,9 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
 }
 
 ROOT_URLCONF = 'qqing.urls'
@@ -162,3 +165,19 @@ JWT_AUTH = {
 }
 
 AUTH_USER_MODEL = 'user.User'
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_exising_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'level': 'ERROR'
+#         },
+#     }
+# }

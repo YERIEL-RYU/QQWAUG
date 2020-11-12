@@ -2,22 +2,26 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Mycar
 from .serializers import MycarSerializer
-from user.models import User
 
 
 class MycarList(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
 
+    def get_object(self, userid):
+        try:
+            return Mycar.objects.get(userid=userid)
+        except:
+            raise Http404
     # 조회
-    @permission_classes((IsAuthenticated,))
-    @authentication_classes((JSONWebTokenAuthentication))
-    def get(self, requset, userid):
-        getuserid = User.objects.get(userid=userid)
-        queryset = Mycar.objects.get(author=getuserid)
+
+    def get(self, requset, userid, format=None):
+        queryset = self.get_object(userid)
         serializer = MycarSerializer(queryset)
-        return Response(serializer.data)
+        print(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)

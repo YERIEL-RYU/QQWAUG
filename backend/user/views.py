@@ -4,41 +4,45 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
-from .serializers import UserLoginSerializer, UserCreateSerializer
-from .permissions import IsUserOrReadOnly
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
+from rest_framework.views import APIView
+from .serializers import UserLoginSerializer, UserCreateSerializer, UserSerializer, ProfileSerializer
+from .permissions import IsUserOrReadOnly
+from rest_framework.parsers import JSONParser
+import json
+
+
+class DuplicateUserid(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = UserSerializer
+
+    def get(self, request, userid):
+        print(userid)
+        queryset = User.objects.filter(userid=userid)
+        serializer = UserSerializer(queryset, many=True)
+        if not serializer.data:
+            print('empty')
+            return Response({"message": "You can make userid"}, status=status.HTTP_200_OK)
+        return Response({"message": "duplicate userid"}, status=status.HTTP_409_CONFLICT)
+
+
+class Profile(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = ProfileSerializer
+
+    def post(self, request):
+        serializer = ProfileSerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 User = get_user_model()
-
-
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = (IsUserOrReadOnly)
-
-
-# class SignInView(CreateAPIView):
-#     serializer_class = SignupSerializer
-#     permission_classes = (AllowAny)
-
-#     def post(self, request, *args, **kwargs):
-#         serializer_user = SignupSerializer(data=request.data)
-#         if serializer_user.is_valid():
-#             User.objects.create_user(
-#                 userid=serializer_user.initial_data['userid'],
-#                 username=serializer_user.initial_data['username'],
-#                 useremail=serializer_user.initial_data['useremail'],
-#                 password=serializer_user.initial_data['password'],
-#             )
-
-#             tokens = JSONWebTokenSerializer(
-#                 request.data).validate(request.data)
-
-#             return Response(tokens, status=status.HTTP_201_CREATED)
-
-#         else:
-#             return Response(serializer_user._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

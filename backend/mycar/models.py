@@ -7,8 +7,7 @@ class Mycar(models.Model):
         ('Diesel', 'Diesel'),
         ('Gas', 'Gas')
     )
-    author = models.ForeignKey(
-        'user.User', on_delete=models.CASCADE)
+    userid = models.CharField(max_length=255, null=False, blank=False)
     car_company = models.CharField(max_length=100, null=True, blank=True)
     car_name = models.CharField(max_length=100, null=True, blank=True)
     car_old = models.IntegerField(null=True, blank=True)
@@ -19,4 +18,4 @@ class Mycar(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return str(self.author)+"_"+self.car_number
+        return self.userid+"_"+self.car_number

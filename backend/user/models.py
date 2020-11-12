@@ -95,17 +95,17 @@ class Profiles(models.Model):
         ('F', 'F'),
         ('M', 'M')
     )
-    author = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    userid = models.CharField(max_length=255, null=False, blank=False)
     profile_img = models.ImageField(
         upload_to=user_directory_path, null=True, blank=True)
     profile_region = models.CharField(
-        max_length=100, blank=True, choices=REGION)
+        max_length=100, blank=True, choices=REGION, null=True,)
     profile_gender = models.CharField(
         max_length=100, choices=GENDER, default=''
     )
 
     def __str__(self):
-        return str(self.author)+'_profiles'
+        return self.userid + '_profiles'
 
     def image_tag(self):
         return format_html('<img src="{}" height="50"/>'.format(self.profile_img.url))
