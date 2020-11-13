@@ -29,7 +29,7 @@ class DuplicateUserid(APIView):
 
 class Profile(APIView):
     permission_classes = (AllowAny,)
-    serializer_class = ProfileSerializer
+    serializer_class = ProfileSerializer, UserSerializer
     parser_classes = (JSONParser, MultiPartParser)
 
     def get_object(self, userid):
@@ -47,8 +47,12 @@ class Profile(APIView):
 
     def get(self, request, userid):
         queryset = self.get_object(userid=userid)
+        userqueryset = User.objects.get(userid=userid)
+        user = UserSerializer(userqueryset)
         serializer = ProfileSerializer(queryset)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        newData = dict(user.data, **serializer.data)
+        print(newData)
+        return Response(data=newData, status=status.HTTP_200_OK)
 
 
 User = get_user_model()

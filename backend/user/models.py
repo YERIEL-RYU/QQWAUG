@@ -61,6 +61,7 @@ def set_imagename_format(now, instance, filename):
     e.g)
         {username}-{date}{extension}
     """
+    print(os.path.splitext(filename)[1])
     return "{username}-{date}{extension}".format(
         username=instance.userid,
         date=str(now.date()),
@@ -76,7 +77,6 @@ def user_directory_path(instance, filename):
         user/img/user4/user4-2020-11-05.jpg
     """
     now = datetime.datetime.now()
-
     path = "user/img/{username}/{imagename}".format(
         username=instance.userid,
         imagename=set_imagename_format(now, instance, filename)
@@ -97,7 +97,7 @@ class Profiles(models.Model):
     )
     userid = models.CharField(max_length=255, null=False, blank=False)
     profile_img = models.ImageField(
-        upload_to=user_directory_path, null=True, blank=True)
+        upload_to=user_directory_path, blank=True, null=True)
     profile_region = models.CharField(
         max_length=100, blank=True, choices=REGION, null=True,)
     profile_gender = models.CharField(
@@ -109,5 +109,7 @@ class Profiles(models.Model):
         return self.userid + '_profiles'
 
     def image_tag(self):
-        return format_html('<img src="{}" height="50"/>'.format(self.profile_img.url))
+        if self.profile_img:
+            return format_html('<img src="{}" height="50"/>'.format(self.profile_img.url))
+        return format_html('<img src="{}" height="50"/>'.format("https: // missioninfra.net/img/noimg/noimg_4x3.gif"))
     image_tag.short_description = 'Profiles'

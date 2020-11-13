@@ -166,18 +166,18 @@ JWT_AUTH = {
 
 AUTH_USER_MODEL = 'user.User'
 
-LOGGING = {
-    'version': 1,
-    'disable_exising_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG'
-        },
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_exising_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG'
+#         },
+#     }
+# }
