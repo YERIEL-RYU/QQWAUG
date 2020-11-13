@@ -62,7 +62,7 @@ def set_imagename_format(now, instance, filename):
         {username}-{date}{extension}
     """
     return "{username}-{date}{extension}".format(
-        username=instance.author,
+        username=instance.userid,
         date=str(now.date()),
         extension=os.path.splitext(filename)[1],
     )
@@ -78,7 +78,7 @@ def user_directory_path(instance, filename):
     now = datetime.datetime.now()
 
     path = "user/img/{username}/{imagename}".format(
-        username=instance.author,
+        username=instance.userid,
         imagename=set_imagename_format(now, instance, filename)
     )
     return path
@@ -103,6 +103,7 @@ class Profiles(models.Model):
     profile_gender = models.CharField(
         max_length=100, choices=GENDER, default=''
     )
+    objects = models.Manager()
 
     def __str__(self):
         return self.userid + '_profiles'

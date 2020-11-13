@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 from .models import User, Profiles
 
 User = get_user_model()
-Profiles = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -84,17 +83,10 @@ class UserLoginSerializer(serializers.Serializer):
 """
 
 
-class ProfileSerializer(serializers.Serializer):
-    userid = serializers.CharField(required=True)
-    profile_img = serializers.ImageField(required=False, use_url=True)
-    profile_region = serializers.CharField(required=False)
-    profile_gender = serializers.CharField(required=False)
+class ProfileSerializer(serializers.ModelSerializer):
+    profile_img = serializers.ImageField(
+        allow_empty_file=True, allow_null=True, required=False, use_url=True)
 
-    def create(self, validated_data):
-        profile = Profiles.objects.create(
-            userid=validated_data['userid'],
-            profile_region=validated_data['profile_region'],
-            profile_gender=validated_data['profile_gender'],
-        )
-        profile.save()
-        return profile
+    class Meta:
+        model = Profiles
+        fields = "__all__"
