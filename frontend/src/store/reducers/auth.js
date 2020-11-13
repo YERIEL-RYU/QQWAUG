@@ -83,7 +83,7 @@ export const logoutRequest = () => {
 //초기 상태
 const initialState = {
   status: {
-    isLoggedIn: localStorage.getItem('access') ? true : false,
+    isLoggedIn: localStorage.getItem('token') ? true : false,
   },
   token: null,
   refresh: null,
