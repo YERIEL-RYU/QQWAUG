@@ -43,6 +43,7 @@ const Profile = ({ profileValue, onChange }) => {
             type="file"
             accept="image/jpg, image/png, image/jpeg, image/gif"
             onChange={onFileChange}
+            value={profileValue.img}
           />
         </Grid>
         <Grid item>
@@ -78,9 +79,9 @@ const Profile = ({ profileValue, onChange }) => {
             value={profileValue.userRegion || ''}
             onChange={onChange}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={10}>서울</MenuItem>
+            <MenuItem value={20}>부산</MenuItem>
+            <MenuItem value={30}>인천</MenuItem>
           </Select>
         </Grid>
       </Grid>

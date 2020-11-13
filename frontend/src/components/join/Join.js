@@ -107,7 +107,6 @@ const Join = () => {
         .then((response) => {
           const status = response.status;
           if (status === 200) {
-            console.log('zz');
           }
         })
         .catch((error) => {
@@ -125,6 +124,7 @@ const Join = () => {
     (e) => {
       console.log(joinValue, profileValue, 'onSubmit');
       const { userId, userPw, userName, userEmail } = joinValue;
+      const { img, userGender, userRegion } = profileValue;
       axios
         .post('http://localhost:8000/users/create/', {
           userid: userId,
@@ -138,9 +138,24 @@ const Join = () => {
         .catch((error) => {
           console.log(error.response);
         });
+      if (profileValue !== null) {
+        axios
+          .post('http://localhost:8000/users/profile/', {
+            userid: userId,
+            profile_img: img,
+            profile_gender: userGender,
+            profile_region: userRegion,
+          })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
       onNext();
     },
-    [joinValue, activeStep],
+    [joinValue, profileValue, activeStep],
   );
   return (
     <Fragment>

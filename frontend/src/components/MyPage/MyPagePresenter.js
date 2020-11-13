@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   CssBaseline,
   Grid,
@@ -28,8 +28,17 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '300px',
     textAlign: 'center',
   },
+  content: {
+    height: 50,
+    paddingTop: 10,
+    cursor: 'pointer',
+  },
+  img: {
+    width: '100px',
+    height: 'auto',
+  },
 }));
-const MyPagePresenter = () => {
+const MyPagePresenter = ({ onClick, user }) => {
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
@@ -48,12 +57,15 @@ const MyPagePresenter = () => {
               justify="flex-start"
               spacing={3}
               alignItems="center"
+              onClick={onClick}
             >
-              <Grid item xs={3}>
-                <label>아이디</label>
+              <Grid item xs={4}>
+                <Typography variant="subtitle1" className={classes.content}>
+                  아이디
+                </Typography>
               </Grid>
               <Grid item>
-                <span>dddd</span>
+                <span className={classes.content}>{user.userId}</span>
               </Grid>
             </Grid>
             <Divider />
@@ -62,12 +74,15 @@ const MyPagePresenter = () => {
               justify="flex-start"
               spacing={3}
               alignItems="center"
+              onClick={onClick}
             >
-              <Grid item xs={3}>
-                <label>이름</label>
+              <Grid item xs={4}>
+                <Typography variant="subtitle1" className={classes.content}>
+                  비밀번호
+                </Typography>
               </Grid>
               <Grid item>
-                <span>dddd</span>
+                <span className={classes.content}>비밀번호를 변경합니다.</span>
               </Grid>
             </Grid>
             <Divider />
@@ -76,12 +91,15 @@ const MyPagePresenter = () => {
               justify="flex-start"
               spacing={3}
               alignItems="center"
+              onClick={onClick}
             >
-              <Grid item xs={3}>
-                <label>휴대전화번호</label>
+              <Grid item xs={4}>
+                <Typography variant="subtitle1" className={classes.content}>
+                  이름
+                </Typography>
               </Grid>
               <Grid item>
-                <span></span>
+                <span className={classes.content}>{user.userName}</span>
               </Grid>
             </Grid>
             <Divider />
@@ -90,12 +108,15 @@ const MyPagePresenter = () => {
               justify="flex-start"
               spacing={3}
               alignItems="center"
+              onClick={onClick}
             >
-              <Grid item xs={3}>
-                <label>이메일</label>
+              <Grid item xs={4}>
+                <Typography variant="subtitle1" className={classes.content}>
+                  이메일
+                </Typography>
               </Grid>
               <Grid item>
-                <span>dddd</span>
+                <span className={classes.content}>{user.userEmail}</span>
               </Grid>
             </Grid>
           </Paper>
@@ -110,12 +131,21 @@ const MyPagePresenter = () => {
               justify="flex-start"
               spacing={3}
               alignItems="center"
+              onClick={onClick}
             >
-              <Grid item xs={3}>
-                <label>지역</label>
+              <Grid item xs={4}>
+                <Typography variant="subtitle1" className={classes.content}>
+                  지역
+                </Typography>
               </Grid>
               <Grid item>
-                <span>dddd</span>
+                {user.profileRegion === '' || user.profileRegion === null ? (
+                  <span className={classes.content}>
+                    등록 된 정보가 없습니다.
+                  </span>
+                ) : (
+                  <span className={classes.content}>{user.profileRegion}</span>
+                )}
               </Grid>
             </Grid>
             <Divider />
@@ -124,12 +154,21 @@ const MyPagePresenter = () => {
               justify="flex-start"
               spacing={3}
               alignItems="center"
+              onClick={onClick}
             >
-              <Grid item xs={3}>
-                <label>성별</label>
+              <Grid item xs={4}>
+                <Typography variant="subtitle1" className={classes.content}>
+                  성별
+                </Typography>
               </Grid>
               <Grid item>
-                <span>dddd</span>
+                {user.profileGender === '' || user.profileGender === null ? (
+                  <span className={classes.content}>
+                    등록 된 정보가 없습니다.
+                  </span>
+                ) : (
+                  <span className={classes.content}>{user.profileGender}</span>
+                )}
               </Grid>
             </Grid>
             <Divider />
@@ -138,12 +177,23 @@ const MyPagePresenter = () => {
               justify="flex-start"
               spacing={3}
               alignItems="center"
+              onClick={onClick}
             >
-              <Grid item xs={3}>
-                <label>이미지</label>
+              <Grid item xs={4}>
+                <Typography variant="subtitle1" className={classes.content}>
+                  이미지
+                </Typography>
               </Grid>
               <Grid item>
-                <img />
+                <img
+                  className={classes.img}
+                  src={
+                    user.profileImg === '' || user.profileImg === null
+                      ? 'https://lh3.googleusercontent.com/proxy/8gjp-8G-0mQGOVEZlSmCw4zQ1LLuIhCMGwPnESMYNlhMmf5UBOoYpxoO83wkVXTigZLtsEkhdsNr1djncVvRYWdYOiDdTQJQWiyn6r18uSYDAA'
+                      : `http://localhost:8000/${user.profileImg}`
+                  }
+                  alt="프로필이미지"
+                />
               </Grid>
             </Grid>
           </Paper>
