@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,6 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core';
+
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -27,18 +30,52 @@ const tableStyle = makeStyles({
     marginTop: 30,
     marginBottom: 30,
   },
-  button: {
-    backgroundColor: '#006888',
-    color: 'white',
-  },
 });
 const MyCarAdd = ({ history }) => {
   const classes = tableStyle();
+  const [value, setValue] = useState([]);
   const onGoBack = () => {
     history.goBack();
   };
+  const onSubmit = () => {
+    console.log(value);
+    const { carMaker, carName, carYear, oilKind, carNum } = value;
+    const userid = localStorage.getItem('userid');
+    const Authorization = localStorage.getItem('token');
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/mycar/',
+      headers: {
+        Authorization: `JWT ${Authorization}`,
+      },
+      data: {
+        userid: userid,
+        car_company: carMaker,
+        car_name: carName,
+        car_old: carYear,
+        car_oil: oilKind,
+        car_number: carNum,
+      },
+    })
+      .then((response) => {
+        const status = response.status;
+        if (status === 200) {
+          return (window.location.href = '/index');
+        }
+      })
+      .error((error) => {
+        const status = error.status;
+        console.log(status);
+      });
+  };
+  const onChange = useCallback(
+    (e) => {
+      console.log(e.target.value);
+      setValue({ ...value, [e.target.name]: e.target.value });
+    },
+    [value],
+  );
   useEffect(() => {
-    console.log(history, 'useEffect');
     const unblock = history.block('등록을 취소하시겠습니까?');
     return () => {
       unblock();
@@ -60,12 +97,15 @@ const MyCarAdd = ({ history }) => {
               <TableCell align="center">제조사</TableCell>
               <TableCell align="center">
                 <TextField
-                  id="outlined-full-width"
+                  id="carMaker"
+                  name="carMaker"
                   style={{ margin: 1 }}
                   fullWidth
                   margin="dense"
                   placeholder="제조사를 입력하세요."
                   variant="outlined"
+                  value={value.carMaker || ''}
+                  onChange={onChange}
                 />
               </TableCell>
             </StyledTableRow>
@@ -73,11 +113,14 @@ const MyCarAdd = ({ history }) => {
               <TableCell align="center">차 종</TableCell>
               <TableCell align="center">
                 <TextField
-                  id="outlined-full-width"
+                  id="carName"
+                  name="carName"
                   margin="dense"
                   fullWidth
                   placeholder="차종을 입력하세요."
                   variant="outlined"
+                  value={value.carName || ''}
+                  onChange={onChange}
                 />
               </TableCell>
             </StyledTableRow>
@@ -85,12 +128,15 @@ const MyCarAdd = ({ history }) => {
               <TableCell align="center">연식</TableCell>
               <TableCell align="center">
                 <TextField
-                  id="outlined-full-width"
+                  id="carYear"
+                  name="carYear"
                   style={{ margin: 1 }}
                   fullWidth
                   margin="dense"
                   placeholder="연식을 입력하세요."
                   variant="outlined"
+                  value={value.carYear || ''}
+                  onChange={onChange}
                 />
               </TableCell>
             </StyledTableRow>
@@ -98,12 +144,15 @@ const MyCarAdd = ({ history }) => {
               <TableCell align="center">유종</TableCell>
               <TableCell align="center">
                 <TextField
-                  id="outlined-full-width"
+                  id="oilKind"
+                  name="oilKind"
                   style={{ margin: 1 }}
                   fullWidth
                   margin="dense"
                   placeholder="유종 입력하세요."
                   variant="outlined"
+                  value={value.oilKind || ''}
+                  onChange={onChange}
                 />
               </TableCell>
             </StyledTableRow>
@@ -111,12 +160,15 @@ const MyCarAdd = ({ history }) => {
               <TableCell align="center">차량번호</TableCell>
               <TableCell align="center">
                 <TextField
-                  id="outlined-full-width"
+                  id="carNum"
+                  name="carNum"
                   style={{ margin: 1 }}
                   fullWidth
                   margin="dense"
                   placeholder="차량번호를 입력하세요."
                   variant="outlined"
+                  value={value.carNum || ''}
+                  onChange={onChange}
                 />
               </TableCell>
             </StyledTableRow>
@@ -130,8 +182,13 @@ const MyCarAdd = ({ history }) => {
           </Button>
         </Grid>
         <Grid item xs={6} align="right">
-          <Button variant="contained" color={'primary'}>
-            저장
+          <Button
+            variant="contained"
+            color={'primary'}
+            type="button"
+            onClick={onSubmit}
+          >
+            등록
           </Button>
         </Grid>
       </Grid>
