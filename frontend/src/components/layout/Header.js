@@ -62,13 +62,13 @@ const Header = ({
   onMenuOpen,
   onMenuClose,
   onLogout,
+  profileImg,
 }) => {
   const classes = useStyles();
   //My page click event
   const onClick = (e) => {
     onMenuOpen(e.currentTarget);
   };
-
   return (
     <AppBar
       position="fixed"
@@ -92,7 +92,16 @@ const Header = ({
           <Grid item>
             <Grid container>
               <Grid item>
-                <Avatar className={classes.small} onClick={onClick}></Avatar>
+                <Avatar
+                  className={classes.small}
+                  onClick={onClick}
+                  alt="Profile image"
+                  src={
+                    profileImg !== null
+                      ? 'http://localhost:8000/' + profileImg
+                      : ''
+                  }
+                ></Avatar>
                 <Menu anchorEl={anchorEl} onMenuClose={onMenuClose} />
               </Grid>
               <Grid item>

@@ -10,6 +10,10 @@ const REGISTER = '/auth/REGISTER';
 const REGISTER_SUCCESS = '/auth/REGISTER_SUCCESS';
 const REGISTER_FAILURE = '/auth/REGISTER_FAILURE';
 
+const USER = '/auth/USER';
+const USER_SUCCESS = '/auth/USER_SUCCESS';
+const USER_FAILURE = '/auth/USER_FAILURE';
+
 const api = axios.create({
   baseURI: 'http://localhost:8000/',
 });
@@ -80,6 +84,29 @@ export const logoutRequest = () => {
   };
 };
 
+export const user = () => ({
+  type: USER,
+});
+export const userSuccess = (profile_img) => ({
+  type: USER_SUCCESS,
+  profile_img,
+});
+export const userFailure = (error) => ({
+  type: USER_FAILURE,
+  error,
+});
+export const userRequest = () => {
+  return (dispatch) => {
+    dispatch(user());
+    const userid = localStorage.getItem('userid');
+    axios
+      .get(`http://localhost:8000/users/profile/${userid}/`)
+      .then((response) => response.data)
+      .then(({ profile_img }) => dispatch(userSuccess(profile_img)))
+      .catch((error) => console.log(error.response));
+  };
+};
+
 //초기 상태
 const initialState = {
   status: {
@@ -88,6 +115,12 @@ const initialState = {
   token: null,
   refresh: null,
   loading: false,
+  profile: {
+    userName: '',
+    profileImg: '',
+    profileRegion: '',
+    profileGender: '',
+  },
 };
 
 //리듀서 함수
@@ -119,6 +152,17 @@ const auth = (state = initialState, action) => {
         refresh: null,
         status: {
           isLoggedIn: action.isLoggedIn,
+        },
+      };
+    case USER:
+      return {
+        ...state,
+      };
+    case USER_SUCCESS:
+      return {
+        ...state,
+        profile: {
+          profileImg: action.profile_img,
         },
       };
     default:

@@ -34,6 +34,7 @@ const LayoutPresenter = ({
   onDrawerClose,
   //header
   anchorEl,
+  profileImg,
   onMenuOpen,
   onMenuClose,
   onLogout,
@@ -49,6 +50,7 @@ const LayoutPresenter = ({
       <div className={classes.root}>
         <CssBaseline />
         <Header
+          profileImg={profileImg}
           onDrawerOpen={onDrawerOpen}
           drawerState={drawerState}
           anchorEl={anchorEl}

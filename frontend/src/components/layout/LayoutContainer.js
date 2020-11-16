@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   drawerOpen,
@@ -10,18 +10,26 @@ import {
 } from '../../store/reducers/layout';
 import LayoutPresenter from './LayoutPresenter';
 import Router from '../../routes/routes';
-import { logoutRequest } from '../../store/reducers/auth';
+import { logoutRequest, userRequest } from '../../store/reducers/auth';
 
 const LayoutContainer = () => {
-  const { drawerState, anchorEl, secMenuOpen, secMenu } = useSelector(
-    (state) => ({
-      drawerState: state.layout.drawerState,
-      anchorEl: state.layout.anchorEl,
-      secMenuOpen: state.layout.secMenuOpen,
-      secMenu: state.layout.secMenu,
-    }),
-  );
+  const {
+    drawerState,
+    anchorEl,
+    secMenuOpen,
+    secMenu,
+    profileImg,
+  } = useSelector((state) => ({
+    drawerState: state.layout.drawerState,
+    anchorEl: state.layout.anchorEl,
+    secMenuOpen: state.layout.secMenuOpen,
+    secMenu: state.layout.secMenu,
+    profileImg: state.auth.profile.profileImg,
+  }));
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(userRequest());
+  }, [dispatch]);
   //mainTemplate
   const onDrawerOpen = useCallback(() => dispatch(drawerOpen()), [dispatch]);
   const onDrawerClose = useCallback(() => dispatch(drawerClose()), [dispatch]);
@@ -46,6 +54,7 @@ const LayoutContainer = () => {
       onDrawerOpen={onDrawerOpen}
       onDrawerClose={onDrawerClose}
       //header
+      profileImg={profileImg}
       anchorEl={anchorEl}
       onMenuOpen={onMenuOpen}
       onMenuClose={onMenuClose}
