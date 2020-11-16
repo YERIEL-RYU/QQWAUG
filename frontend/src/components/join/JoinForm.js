@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, TextField, Typography } from '@material-ui/core';
 
 const JoinForm = (props) => {
-  const { joinValue, onChange, onUseridChange } = props;
+  const { joinValue, onChange, onUseridChange, alert } = props;
   return (
     <>
       <Typography variant="h5" gutterBottom align="center">
@@ -19,10 +19,18 @@ const JoinForm = (props) => {
             name="userId"
             label="아이디를 입력하세요"
             fullWidth
-            onChange={onUseridChange}
+            onChange={onChange}
             value={joinValue.userId || ''}
             error={joinValue.userId === '' ? true : false}
+            onBlur={onUseridChange}
           />
+          <Grid item xs={12}>
+            {alert.slice(0, 3) === '200' ? (
+              <span style={{ color: 'green' }}>{alert.slice(3)}</span>
+            ) : (
+              <span style={{ color: 'red' }}>{alert.slice(3)}</span>
+            )}
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <TextField

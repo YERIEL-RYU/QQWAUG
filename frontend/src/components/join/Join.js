@@ -54,6 +54,7 @@ const getStepContent = (
   step,
   joinValue,
   profileValue,
+  alert,
   onChange,
   onUseridChange,
 ) => {
@@ -62,6 +63,7 @@ const getStepContent = (
       return (
         <JoinForm
           joinValue={joinValue}
+          alert={alert}
           onChange={onChange}
           onUseridChange={onUseridChange}
         />
@@ -79,6 +81,7 @@ const Join = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [joinValue, setJoinValue] = useState([]);
   const [profileValue, setProfileValue] = useState([]);
+  const [alert, setAlert] = useState('');
   const onNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -99,22 +102,22 @@ const Join = () => {
   );
   const onUseridChange = useCallback(
     (e) => {
-      setJoinValue({ ...joinValue, [e.target.name]: e.target.value });
-      const userid = e.target.value;
+      const userid = joinValue.userId;
       console.log(userid);
       axios
         .get(`http://localhost:8000/users/duplicate/${userid}`)
         .then((response) => {
           const status = response.status;
           if (status === 200) {
+            setAlert('200 사용 가능한 아이디입니다.');
           }
         })
         .catch((error) => {
           const status = error.response.status;
           if (status === 409) {
-            window.alert('이미 있는 아이디');
+            setAlert('409 이미 사용 중인 아이디입니다.');
           } else {
-            window.alert('아이디 입력 ㄱㄱ');
+            setAlert('404 아이디를 입력하세요');
           }
         });
     },
@@ -191,6 +194,7 @@ const Join = () => {
                   activeStep,
                   joinValue,
                   profileValue,
+                  alert,
                   onChange,
                   onUseridChange,
                 )}
