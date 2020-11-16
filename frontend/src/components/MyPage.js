@@ -41,8 +41,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 const MyPage = () => {
   useEffect(() => {
+    const userid = localStorage.getItem('userid');
     axios
-      .get('http://localhost:8000/users/profile/user3/')
+      .get(`http://localhost:8000/users/profile/${userid}/`)
       .then((response) => response.data)
       .then(
         ({ userid, username, profile_img, profile_region, profile_gender }) =>
@@ -66,7 +67,7 @@ const MyPage = () => {
   const classes = useStyles();
   const onClick = useCallback(() => {
     console.log('클릭이벤트');
-  });
+  }, []);
   return (
     <Paper className={classes.root}>
       <CssBaseline />
