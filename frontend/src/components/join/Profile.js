@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import {
   Grid,
-  TextField,
   Input,
   Typography,
   InputLabel,
@@ -60,14 +59,18 @@ const Profile = ({ profileValue, onChange }) => {
           )}
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <InputLabel id="userGender">성별</InputLabel>
+          <Select
+            labelId="userGender"
             id="userGender"
             name="userGender"
-            label="성별"
             fullWidth
             value={profileValue.userGender || ''}
             onChange={onChange}
-          />
+          >
+            <MenuItem value="F">여성</MenuItem>
+            <MenuItem value="M">남성</MenuItem>
+          </Select>
         </Grid>
         <Grid item xs={12}>
           <InputLabel id="userRegion">지역</InputLabel>
@@ -79,9 +82,11 @@ const Profile = ({ profileValue, onChange }) => {
             value={profileValue.userRegion || ''}
             onChange={onChange}
           >
+            <MenuItem value={10}>선택 안함</MenuItem>
             <MenuItem value={10}>서울</MenuItem>
             <MenuItem value={20}>부산</MenuItem>
             <MenuItem value={30}>인천</MenuItem>
+            <MenuItem value={30}>기타</MenuItem>
           </Select>
         </Grid>
       </Grid>
