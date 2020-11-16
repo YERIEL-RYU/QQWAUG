@@ -18,4 +18,4 @@ class Mycar(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return self.userid+"_"+self.car_number
+        return self.userid+"_mycar"

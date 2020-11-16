@@ -11,6 +11,7 @@ from .serializers import MycarSerializer
 
 class MycarList(APIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = MycarSerializer
     authentication_classes = (JSONWebTokenAuthentication,)
 
     def get_object(self, userid):
@@ -18,6 +19,7 @@ class MycarList(APIView):
             return Mycar.objects.get(userid=userid)
         except:
             raise Http404
+
     # 조회
 
     def get(self, requset, userid, format=None):
@@ -25,3 +27,12 @@ class MycarList(APIView):
         serializer = MycarSerializer(queryset)
         print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # 등록
+
+    def post(self, request):
+        serializer = MycarSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
