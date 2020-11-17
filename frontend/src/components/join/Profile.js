@@ -68,6 +68,7 @@ const Profile = ({ profileValue, onChange }) => {
             value={profileValue.userGender || ''}
             onChange={onChange}
           >
+            <MenuItem value="">선택안함</MenuItem>
             <MenuItem value="F">여성</MenuItem>
             <MenuItem value="M">남성</MenuItem>
           </Select>
@@ -82,11 +83,11 @@ const Profile = ({ profileValue, onChange }) => {
             value={profileValue.userRegion || ''}
             onChange={onChange}
           >
-            <MenuItem value={10}>선택 안함</MenuItem>
-            <MenuItem value={10}>서울</MenuItem>
-            <MenuItem value={20}>부산</MenuItem>
-            <MenuItem value={30}>인천</MenuItem>
-            <MenuItem value={30}>기타</MenuItem>
+            <MenuItem value="">선택 안함</MenuItem>
+            <MenuItem value="seoul">서울</MenuItem>
+            <MenuItem value="busan">부산</MenuItem>
+            <MenuItem value="incheon">인천</MenuItem>
+            <MenuItem value="">기타</MenuItem>
           </Select>
         </Grid>
       </Grid>

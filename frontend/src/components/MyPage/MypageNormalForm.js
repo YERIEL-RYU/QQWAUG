@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 const MyPageNormalFrom = (props) => {
-  const { title, classes, onGoBack } = props;
+  const { title, classes, onGoBack, value, onChange } = props;
   return (
     <Paper className={classes.root}>
       <CssBaseline />
@@ -33,7 +33,14 @@ const MyPageNormalFrom = (props) => {
             <Typography variant="h6">{title}</Typography>
           </Grid>
           <Grid item xs={6}>
-            <TextField variant="outlined" fullWidth></TextField>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name={title === '비밀번호' ? 'password' : 'useremail'}
+              type={title === '비밀번호' ? 'password' : 'email'}
+              placeholder={title === '비밀번호' ? '' : 'example@qqing.com'}
+              value={title === '비밀번호' ? value.password : value.useremail}
+            ></TextField>
           </Grid>
         </Grid>
         <Divider />

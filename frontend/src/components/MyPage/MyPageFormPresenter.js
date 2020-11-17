@@ -35,23 +35,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MyPageFormPresenter = (props) => {
-  const { title, onGoBack } = props;
+  const { title, onGoBack, onProfileSubmit, onChange, value } = props;
   const classes = useStyles();
   if (title === '지역') {
     return (
-      <MyPageRegionForm title={title} onGoBack={onGoBack} classes={classes} />
+      <MyPageRegionForm
+        title={title}
+        value={value}
+        onGoBack={onGoBack}
+        classes={classes}
+        onProfileSubmit={onProfileSubmit}
+        onChange={onChange}
+      />
     );
   } else if (title === '성별') {
     return (
-      <MyPageGenderForm title={title} onGoBack={onGoBack} classes={classes} />
+      <MyPageGenderForm
+        title={title}
+        value={value}
+        onGoBack={onGoBack}
+        classes={classes}
+        onProfileSubmit={onProfileSubmit}
+        onChange={onChange}
+      />
     );
   } else if (title === '프로필 이미지') {
     return (
-      <MyPageImageForm title={title} onGoBack={onGoBack} classes={classes} />
+      <MyPageImageForm
+        title={title}
+        value={value}
+        onGoBack={onGoBack}
+        classes={classes}
+        onProfileSubmit={onProfileSubmit}
+        onChange={onChange}
+      />
     );
   } else {
     return (
-      <MyPageNormalForm title={title} onGoBack={onGoBack} classes={classes} />
+      <MyPageNormalForm
+        title={title}
+        value={value}
+        onGoBack={onGoBack}
+        classes={classes}
+        onChange={onChange}
+      />
     );
   }
 };

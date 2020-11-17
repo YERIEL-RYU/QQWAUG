@@ -163,7 +163,7 @@ const MyPagePresenter = ({ onClick, user }) => {
               </Grid>
               <Grid item>
                 {user.profileRegion === '' || user.profileRegion === null ? (
-                  <span className={classes.content}>
+                  <span className={classes.content} id="profileregion">
                     등록 된 정보가 없습니다.
                   </span>
                 ) : (
@@ -193,7 +193,7 @@ const MyPagePresenter = ({ onClick, user }) => {
               </Grid>
               <Grid item>
                 {user.profileGender === '' || user.profileGender === null ? (
-                  <span className={classes.content}>
+                  <span className={classes.content} id="profilegender">
                     등록 된 정보가 없습니다.
                   </span>
                 ) : (

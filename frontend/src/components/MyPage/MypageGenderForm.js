@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 
 const MypageGenderForm = (props) => {
-  const { title, classes, onGoBack } = props;
+  const { title, classes, onGoBack, onChange, value, onProfileSubmit } = props;
   return (
     <Paper className={classes.root}>
       <CssBaseline />
@@ -24,48 +24,52 @@ const MypageGenderForm = (props) => {
           {title} 변경
         </Typography>
         <Divider />
-        <Grid
-          container
-          direction="row"
-          alignItems="center"
-          justify="center"
-          className={classes.content}
-        >
-          <Grid item xs={4}>
-            <InputLabel id="userGender">성별</InputLabel>
+        <form onSubmit={onProfileSubmit}>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            justify="center"
+            className={classes.content}
+          >
+            <Grid item xs={4}>
+              <InputLabel id="userGender">성별</InputLabel>
+            </Grid>
+            <Grid item xs={6}>
+              <Select
+                labelId="userGender"
+                id="userGender"
+                name="userGender"
+                fullWidth
+                value={value.userGender || ''}
+                onChange={onChange}
+              >
+                <MenuItem value="">선택안함</MenuItem>
+                <MenuItem value="F">여성</MenuItem>
+                <MenuItem value="M">남성</MenuItem>
+              </Select>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <Select
-              labelId="userGender"
-              id="userGender"
-              name="userGender"
-              fullWidth
-            >
-              <MenuItem value="">선택안함</MenuItem>
-              <MenuItem value="F">여성</MenuItem>
-              <MenuItem value="M">남성</MenuItem>
-            </Select>
+          <Divider />
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            justify="center"
+            className={classes.button}
+          >
+            <Grid item xs={6}>
+              <Button variant="contained" onClick={onGoBack}>
+                취소
+              </Button>
+            </Grid>
+            <Grid item xs={6} align="center">
+              <Button variant="contained" color={'primary'} type="submit">
+                등록
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-        <Divider />
-        <Grid
-          container
-          direction="row"
-          alignItems="center"
-          justify="center"
-          className={classes.button}
-        >
-          <Grid item xs={6}>
-            <Button variant="contained" onClick={onGoBack}>
-              취소
-            </Button>
-          </Grid>
-          <Grid item xs={6} align="center">
-            <Button variant="contained" color={'primary'} type="button">
-              등록
-            </Button>
-          </Grid>
-        </Grid>
+        </form>
       </Paper>
     </Paper>
   );
