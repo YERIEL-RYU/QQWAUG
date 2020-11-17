@@ -108,7 +108,7 @@ const Sidebar = (props) => {
       }}
     >
       <Grid className={classes.toolbar}>
-        <Link to="/index" style={{ textDecoration: 'none' }}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
           <Typography variant="subtitle1">삥삥아 어디까지 갈래</Typography>
         </Link>
         <IconButton onClick={onDrawerClose}>
