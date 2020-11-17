@@ -6,6 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from .serializers import UserLoginSerializer, UserCreateSerializer, UserSerializer, ProfileSerializer
@@ -53,6 +54,14 @@ class Profile(APIView):
         newData = dict(user.data, **serializer.data)
         print(newData)
         return Response(data=newData, status=status.HTTP_200_OK)
+
+    def patch(self, request, userid):
+        profile = self.get_object(userid=userid)
+        serializer = ProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 User = get_user_model()

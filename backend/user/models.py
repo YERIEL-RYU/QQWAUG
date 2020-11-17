@@ -92,6 +92,7 @@ class Profiles(models.Model):
         ('busan', '부산')
     )
     GENDER = (
+        ('', '선택안함'),
         ('F', 'F'),
         ('M', 'M')
     )
@@ -101,7 +102,7 @@ class Profiles(models.Model):
     profile_region = models.CharField(
         max_length=100, blank=True, choices=REGION, null=True,)
     profile_gender = models.CharField(
-        max_length=100, choices=GENDER, default=''
+        max_length=100, choices=GENDER, null=True, blank=True,
     )
     objects = models.Manager()
 
