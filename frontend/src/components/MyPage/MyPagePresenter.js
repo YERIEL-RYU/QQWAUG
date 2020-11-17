@@ -6,6 +6,7 @@ import {
   Typography,
   makeStyles,
   Divider,
+  Link,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 10,
     cursor: 'pointer',
   },
+  content2: {
+    height: 50,
+    paddingTop: 10,
+  },
   img: {
     width: '100px',
     height: 'auto',
@@ -57,32 +62,38 @@ const MyPagePresenter = ({ onClick, user }) => {
               justify="flex-start"
               spacing={3}
               alignItems="center"
-              onClick={onClick}
             >
               <Grid item xs={4}>
-                <Typography variant="subtitle1" className={classes.content}>
+                <Typography variant="subtitle1" className={classes.content2}>
                   아이디
                 </Typography>
               </Grid>
               <Grid item>
-                <span className={classes.content}>{user.userId}</span>
+                <span className={classes.content2}>{user.userId}</span>
               </Grid>
             </Grid>
             <Divider />
             <Grid
               container
+              id="userpassword"
               justify="flex-start"
               spacing={3}
               alignItems="center"
               onClick={onClick}
             >
               <Grid item xs={4}>
-                <Typography variant="subtitle1" className={classes.content}>
+                <Typography
+                  variant="subtitle1"
+                  className={classes.content}
+                  id="userpassword"
+                >
                   비밀번호
                 </Typography>
               </Grid>
               <Grid item>
-                <span className={classes.content}>비밀번호를 변경합니다.</span>
+                <span className={classes.content} id="userpassword">
+                  비밀번호를 변경합니다.
+                </span>
               </Grid>
             </Grid>
             <Divider />
@@ -94,29 +105,36 @@ const MyPagePresenter = ({ onClick, user }) => {
               onClick={onClick}
             >
               <Grid item xs={4}>
-                <Typography variant="subtitle1" className={classes.content}>
+                <Typography variant="subtitle1" className={classes.content2}>
                   이름
                 </Typography>
               </Grid>
               <Grid item>
-                <span className={classes.content}>{user.userName}</span>
+                <span className={classes.content2}>{user.userName}</span>
               </Grid>
             </Grid>
             <Divider />
             <Grid
               container
+              id="useremail"
               justify="flex-start"
               spacing={3}
               alignItems="center"
               onClick={onClick}
             >
               <Grid item xs={4}>
-                <Typography variant="subtitle1" className={classes.content}>
+                <Typography
+                  variant="subtitle1"
+                  className={classes.content}
+                  id="useremail"
+                >
                   이메일
                 </Typography>
               </Grid>
               <Grid item>
-                <span className={classes.content}>{user.userEmail}</span>
+                <span id="useremail" className={classes.content}>
+                  {user.userEmail}
+                </span>
               </Grid>
             </Grid>
           </Paper>
@@ -132,9 +150,14 @@ const MyPagePresenter = ({ onClick, user }) => {
               spacing={3}
               alignItems="center"
               onClick={onClick}
+              id="profileregion"
             >
               <Grid item xs={4}>
-                <Typography variant="subtitle1" className={classes.content}>
+                <Typography
+                  variant="subtitle1"
+                  className={classes.content}
+                  id="profileregion"
+                >
                   지역
                 </Typography>
               </Grid>
@@ -144,7 +167,9 @@ const MyPagePresenter = ({ onClick, user }) => {
                     등록 된 정보가 없습니다.
                   </span>
                 ) : (
-                  <span className={classes.content}>{user.profileRegion}</span>
+                  <span className={classes.content} id="profileregion">
+                    {user.profileRegion}
+                  </span>
                 )}
               </Grid>
             </Grid>
@@ -155,9 +180,14 @@ const MyPagePresenter = ({ onClick, user }) => {
               spacing={3}
               alignItems="center"
               onClick={onClick}
+              id="profilegender"
             >
               <Grid item xs={4}>
-                <Typography variant="subtitle1" className={classes.content}>
+                <Typography
+                  variant="subtitle1"
+                  className={classes.content}
+                  id="profilegender"
+                >
                   성별
                 </Typography>
               </Grid>
@@ -167,7 +197,9 @@ const MyPagePresenter = ({ onClick, user }) => {
                     등록 된 정보가 없습니다.
                   </span>
                 ) : (
-                  <span className={classes.content}>{user.profileGender}</span>
+                  <span className={classes.content} id="profilegender">
+                    {user.profileGender}
+                  </span>
                 )}
               </Grid>
             </Grid>
@@ -178,18 +210,24 @@ const MyPagePresenter = ({ onClick, user }) => {
               spacing={3}
               alignItems="center"
               onClick={onClick}
+              id="profileimg"
             >
               <Grid item xs={4}>
-                <Typography variant="subtitle1" className={classes.content}>
+                <Typography
+                  variant="subtitle1"
+                  className={classes.content}
+                  id="profileimg"
+                >
                   이미지
                 </Typography>
               </Grid>
               <Grid item>
                 <img
+                  id="profileimg"
                   className={classes.img}
                   src={
                     user.profileImg === '' || user.profileImg === null
-                      ? 'https://lh3.googleusercontent.com/proxy/8gjp-8G-0mQGOVEZlSmCw4zQ1LLuIhCMGwPnESMYNlhMmf5UBOoYpxoO83wkVXTigZLtsEkhdsNr1djncVvRYWdYOiDdTQJQWiyn6r18uSYDAA'
+                      ? ''
                       : `http://localhost:8000/${user.profileImg}`
                   }
                   alt="프로필이미지"

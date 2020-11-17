@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import MyPagePresenter from './MyPagePresenter';
 
-const MyPageContainer = () => {
+const MyPageContainer = ({ history }) => {
   useEffect(() => {
     axios
       .get(
@@ -40,8 +40,10 @@ const MyPageContainer = () => {
     profileRegion: '',
     profileGender: '',
   });
-  const onClick = useCallback(() => {
-    console.log('클릭이벤트');
+  const onClick = useCallback((e) => {
+    console.log(e.target.id);
+    const name = e.target.id;
+    history.push(`/mypage/${name}`);
   });
   return <MyPagePresenter onClick={onClick} user={user} />;
 };
