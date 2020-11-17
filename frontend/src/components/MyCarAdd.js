@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core';
 
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
