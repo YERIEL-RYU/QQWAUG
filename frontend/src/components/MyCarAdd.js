@@ -59,12 +59,15 @@ const MyCarAdd = ({ history }) => {
       .then((response) => {
         const status = response.status;
         if (status === 200) {
-          return (window.location.href = '/index');
+          return (window.location.href = '/');
         }
       })
       .error((error) => {
         const status = error.status;
         console.log(status);
+        if (status === 400) {
+          return (window.location.href = '/');
+        }
       });
   };
   const onChange = useCallback(

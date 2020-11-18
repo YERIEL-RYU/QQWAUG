@@ -114,7 +114,7 @@ const OilToolbar = (props) => {
                   margin="dense"
                   id="date"
                   name="date"
-                  value={value.date}
+                  value={value.date || ''}
                   type="date"
                   onChange={onChange}
                   fullWidth
@@ -125,7 +125,7 @@ const OilToolbar = (props) => {
                   label="리터"
                   name="liter"
                   type="number"
-                  value={value.liter}
+                  value={value.liter || ''}
                   onChange={onChange}
                   fullWidth
                 />
@@ -136,7 +136,18 @@ const OilToolbar = (props) => {
                   name="price"
                   label="리터 당 가격"
                   type="number"
-                  value={value.price}
+                  value={value.price || ''}
+                  onChange={onChange}
+                  fullWidth
+                />
+                <TextField
+                  validate="filled"
+                  margin="dense"
+                  id="total"
+                  name="total"
+                  label="총 가격"
+                  type="number"
+                  value={Number(value.price) * Number(value.liter) || ''}
                   onChange={onChange}
                   fullWidth
                 />

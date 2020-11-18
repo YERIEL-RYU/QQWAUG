@@ -76,7 +76,7 @@ const tableStyles = makeStyles((theme) => ({
   },
 }));
 
-const table = () => {
+const Oil = () => {
   const classes = tableStyles();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [order, setOrder] = useState('asc');
@@ -85,7 +85,7 @@ const table = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowPerPage] = useState(5);
 
-  const onRequestSort = (event, property) => {
+  const onRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -95,13 +95,12 @@ const table = () => {
     if (event.target.checked) {
       const newSelecteds = datas.map((n) => n.date);
       setSelected(newSelecteds);
-      //console.log(selected);
       return;
     }
     setSelected([]);
   };
 
-  const onClick = (event, date) => {
+  const onClick = (date) => {
     const selectedIndex = selected.indexOf(date);
     let newSelected = [];
 
@@ -211,4 +210,4 @@ const table = () => {
   );
 };
 
-export default table;
+export default Oil;
