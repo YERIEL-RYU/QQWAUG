@@ -45,3 +45,16 @@ class enginoilDetail(APIView):
         queryset = self.get_object(userid)
         serializer = EnginOilSerializer(queryset)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, userid):
+        enginoil = self.get_object(userid=userid)
+        serializer = EnginOilSerializer(enginoil, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, userid):
+        enginoil = self.get_object(userid=userid)
+        enginoil.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
