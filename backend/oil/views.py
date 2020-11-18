@@ -1,3 +1,60 @@
 from django.shortcuts import render
+from django.http import Http404
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-# Create your views here.
+from .models import Oil
+from .serializers import OilSerializer
+
+
+class OilList(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = OilSerializer
+    parser_classes = (JSONParser)
+
+    def get(self, request, format=None):
+        queryset = Oil.objects.all()
+        serializer = OilSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = OilSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class OilDetail(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = OilSerializer
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    def get_object(self, userid):
+        try:
+            return Oil.objects.get(userid=userid)
+        except:
+            raise Http404
+
+    def get(self, request, userid):
+        queryset = self.get_object(userid)
+        serializer = OilSerializer(queryset)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, userid):
+        Oil = self.get_object(userid=userid)
+        serializer = OilSerializer(Oil, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, userid):
+        Oil = self.get_object(userid=userid)
+        Oil.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
