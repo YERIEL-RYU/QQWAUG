@@ -33,18 +33,24 @@ class Profile(APIView):
     serializer_class = ProfileSerializer, UserSerializer
     parser_classes = (JSONParser, MultiPartParser)
 
-    def get_object(self, userid):
-        try:
-            return Profiles.objects.get(userid=userid)
-        except:
-            raise Http404
-
     def post(self, request):
         serializer = ProfileSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileDetail(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = ProfileSerializer, UserSerializer
+    parser_classes = (JSONParser, MultiPartParser)
+
+    def get_object(self, userid):
+        try:
+            return Profiles.objects.get(userid=userid)
+        except:
+            raise Http404
 
     def get(self, request, userid):
         queryset = self.get_object(userid=userid)
