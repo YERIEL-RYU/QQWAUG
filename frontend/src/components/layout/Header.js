@@ -97,10 +97,11 @@ const Header = ({
                   onClick={onClick}
                   alt="Profile image"
                   src={
-                    profileImg !== null
-                      ? 'http://localhost:8000/' + profileImg
-                      : ''
+                    profileImg === '' || profileImg === null
+                      ? ''
+                      : `http://localhost:8000/${profileImg}`
                   }
+                  alt="프로필이미지"
                 ></Avatar>
                 <Menu anchorEl={anchorEl} onMenuClose={onMenuClose} />
               </Grid>

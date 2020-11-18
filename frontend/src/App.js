@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Login from './components/Login/LoginContainer';
 import Join from './components/join/Join';
-import MyPage from './components/MyPage';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Routes from './routes/routes';
 import LayoutContainer from './components/layout/LayoutContainer';

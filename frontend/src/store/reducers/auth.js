@@ -59,10 +59,6 @@ export const loginRequest = (userid, password) => {
               dispatch(loginFailure(error));
               break;
 
-            case 404:
-              dispatch(loginFailure());
-              break;
-
             case 500:
               dispatch(loginFailure());
               break;
@@ -87,9 +83,9 @@ export const logoutRequest = () => {
 export const user = () => ({
   type: USER,
 });
-export const userSuccess = (profile_img) => ({
+export const userSuccess = (profile) => ({
   type: USER_SUCCESS,
-  profile_img,
+  profile,
 });
 export const userFailure = (error) => ({
   type: USER_FAILURE,
@@ -98,11 +94,14 @@ export const userFailure = (error) => ({
 export const userRequest = () => {
   return (dispatch) => {
     dispatch(user());
+
     const userid = localStorage.getItem('userid');
+    const url = 'http://localhost:8000/users/profile/' + userid + '/';
+
     axios
-      .get(`http://localhost:8000/users/profile/${userid}/`)
+      .get(url)
       .then((response) => response.data)
-      .then(({ profile_img }) => dispatch(userSuccess(profile_img)))
+      .then((profile) => dispatch(userSuccess(profile)))
       .catch((error) => console.log(error.response));
   };
 };
@@ -116,10 +115,14 @@ const initialState = {
   refresh: null,
   loading: false,
   profile: {
-    userName: '',
     profileImg: '',
     profileRegion: '',
     profileGender: '',
+  },
+  user: {
+    userid: '',
+    username: '',
+    useremail: '',
   },
 };
 
@@ -162,7 +165,14 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         profile: {
-          profileImg: action.profile_img,
+          profileImg: action.profile.profile_img,
+          profileRegion: action.profile.profile_region,
+          profileGender: action.profile.profile_gender,
+        },
+        user: {
+          userid: action.profile.userid,
+          username: action.profile.username,
+          useremail: action.profile.useremail,
         },
       };
     default:

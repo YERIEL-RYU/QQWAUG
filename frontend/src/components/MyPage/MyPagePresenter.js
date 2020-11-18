@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   CssBaseline,
   Grid,
@@ -6,7 +6,6 @@ import {
   Typography,
   makeStyles,
   Divider,
-  Link,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     height: 'auto',
   },
 }));
-const MyPagePresenter = ({ onClick, user }) => {
+const MyPagePresenter = ({ onClick, user, profile }) => {
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
@@ -69,13 +68,13 @@ const MyPagePresenter = ({ onClick, user }) => {
                 </Typography>
               </Grid>
               <Grid item>
-                <span className={classes.content2}>{user.userId}</span>
+                <span className={classes.content2}>{user.userid}</span>
               </Grid>
             </Grid>
             <Divider />
             <Grid
               container
-              id="userpassword"
+              id="password"
               justify="flex-start"
               spacing={3}
               alignItems="center"
@@ -85,13 +84,13 @@ const MyPagePresenter = ({ onClick, user }) => {
                 <Typography
                   variant="subtitle1"
                   className={classes.content}
-                  id="userpassword"
+                  id="password"
                 >
                   비밀번호
                 </Typography>
               </Grid>
               <Grid item>
-                <span className={classes.content} id="userpassword">
+                <span className={classes.content} id="password">
                   비밀번호를 변경합니다.
                 </span>
               </Grid>
@@ -110,7 +109,7 @@ const MyPagePresenter = ({ onClick, user }) => {
                 </Typography>
               </Grid>
               <Grid item>
-                <span className={classes.content2}>{user.userName}</span>
+                <span className={classes.content2}>{user.username}</span>
               </Grid>
             </Grid>
             <Divider />
@@ -133,7 +132,7 @@ const MyPagePresenter = ({ onClick, user }) => {
               </Grid>
               <Grid item>
                 <span id="useremail" className={classes.content}>
-                  {user.userEmail}
+                  {user.useremail}
                 </span>
               </Grid>
             </Grid>
@@ -150,25 +149,26 @@ const MyPagePresenter = ({ onClick, user }) => {
               spacing={3}
               alignItems="center"
               onClick={onClick}
-              id="profileregion"
+              id="profile_region"
             >
               <Grid item xs={4}>
                 <Typography
                   variant="subtitle1"
                   className={classes.content}
-                  id="profileregion"
+                  id="profile_region"
                 >
                   지역
                 </Typography>
               </Grid>
               <Grid item>
-                {user.profileRegion === '' || user.profileRegion === null ? (
-                  <span className={classes.content} id="profileregion">
+                {profile.profileRegion === '' ||
+                profile.profileRegion === null ? (
+                  <span className={classes.content} id="profile_region">
                     등록 된 정보가 없습니다.
                   </span>
                 ) : (
-                  <span className={classes.content} id="profileregion">
-                    {user.profileRegion}
+                  <span className={classes.content} id="profile_region">
+                    {profile.profileRegion}
                   </span>
                 )}
               </Grid>
@@ -180,25 +180,26 @@ const MyPagePresenter = ({ onClick, user }) => {
               spacing={3}
               alignItems="center"
               onClick={onClick}
-              id="profilegender"
+              id="profile_gender"
             >
               <Grid item xs={4}>
                 <Typography
                   variant="subtitle1"
                   className={classes.content}
-                  id="profilegender"
+                  id="profile_gender"
                 >
                   성별
                 </Typography>
               </Grid>
               <Grid item>
-                {user.profileGender === '' || user.profileGender === null ? (
-                  <span className={classes.content} id="profilegender">
+                {profile.profileGender === '' ||
+                profile.profileGender === null ? (
+                  <span className={classes.content} id="profile_gender">
                     등록 된 정보가 없습니다.
                   </span>
                 ) : (
-                  <span className={classes.content} id="profilegender">
-                    {user.profileGender}
+                  <span className={classes.content} id="profile_gender">
+                    {profile.profileGender}
                   </span>
                 )}
               </Grid>
@@ -210,25 +211,25 @@ const MyPagePresenter = ({ onClick, user }) => {
               spacing={3}
               alignItems="center"
               onClick={onClick}
-              id="profileimg"
+              id="profile_img"
             >
               <Grid item xs={4}>
                 <Typography
                   variant="subtitle1"
                   className={classes.content}
-                  id="profileimg"
+                  id="profile_img"
                 >
                   이미지
                 </Typography>
               </Grid>
               <Grid item>
                 <img
-                  id="profileimg"
+                  id="profile_img"
                   className={classes.img}
                   src={
-                    user.profileImg === '' || user.profileImg === null
+                    profile.profileImg === '' || profile.profileImg === null
                       ? ''
-                      : `http://localhost:8000/${user.profileImg}`
+                      : `http://localhost:8000/${profile.profileImg}`
                   }
                   alt="프로필이미지"
                 />
