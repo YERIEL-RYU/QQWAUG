@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'user',
     'mycar',
     'oil',
-    'enginoil',
+    'engin',
 ]
 
 MIDDLEWARE = [
