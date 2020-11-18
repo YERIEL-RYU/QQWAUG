@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from datetime import datetime, timedelta
+import os.path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'uhhr3*dep@wv!e48by8u%v9!h4ursmk$szzrneokm_4c9g&v45'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -145,11 +146,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+STATIC_ROOT = ''
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join('static'), )
 
 # CORS_HEADES 설정
 CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000',
     'http://localhost:3000',
     'http://localhost:8000',
 ]
@@ -159,10 +163,12 @@ JWT_AUTH = {
     'JWT_SECRET_KEY': SECRET_KEY,  # jwt에서 사용할 비밀키 설정 현재 django의 비밀키와 같음
     'JWT_ALGORITHM': 'HS256',  # 암호화에서 사용되는 알고리즘 지정
     'JWT_ALLOW_REFRESH': True,  # 토큰을 갱신 할 수 있는지 여부
-    'JWT_EXPIRATION_DELTA': timedelta(days=7),  # 토큰의 유효기간
-    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=28),
+    'JWT_EXPIRATION_DELTA': timedelta(hours=3),  # 토큰의 유효기간
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=1),
     # 토큰 갱신의 유효기간 : 7일씩 4번 갱신 할 수 있고 28일 후에는 로그아웃 처리됨
 }
+
+ACCOUNT_LOGOUT_ON_GET = True
 
 AUTH_USER_MODEL = 'user.User'
 

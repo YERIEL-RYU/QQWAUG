@@ -84,8 +84,6 @@ class UserLoginSerializer(serializers.Serializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    profile_img = serializers.ImageField(
-        allow_empty_file=True, allow_null=True, required=False, use_url=True)
 
     class Meta:
         model = Profiles

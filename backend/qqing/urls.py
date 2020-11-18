@@ -13,7 +13,8 @@ urlpatterns = [
     path('auth/token/verify/', verify_jwt_token),  # 토큰 확인
     path('auth/token/refresh/', refresh_jwt_token),  # 토큰 재발급
     path('mycar/', include('mycar.urls')),
-    path('users/', include('user.urls'))
+    path('users/', include('user.urls')),
+    path('enginoil/', include('enginoil.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

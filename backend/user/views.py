@@ -13,6 +13,8 @@ from .serializers import UserLoginSerializer, UserCreateSerializer, UserSerializ
 from .permissions import IsUserOrReadOnly
 from .models import User, Profiles
 
+from urllib.parse import parse_qs
+
 
 class DuplicateUserid(APIView):
     permission_classes = (AllowAny,)
@@ -55,8 +57,9 @@ class Profile(APIView):
         print(newData)
         return Response(data=newData, status=status.HTTP_200_OK)
 
-    def patch(self, request, userid):
+    def patch(self, request, userid, format=None):
         profile = self.get_object(userid=userid)
+
         serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
