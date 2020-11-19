@@ -8,5 +8,7 @@ class Oil(models.Model):
     oil_price = models.IntegerField(null=False, blank=False)
     oil_total = models.IntegerField(null=False, blank=False)
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.userid+"_"+str(self.oil_date)
