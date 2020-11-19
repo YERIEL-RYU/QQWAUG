@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import MyPageNormalForm from './MypageNormalForm';
+import MyPageUserForm from './MypageNormalForm';
 import MyPageRegionForm from './MyPageRegionForm';
 import MyPageGenderForm from './MypageGenderForm';
 import MyPageImageForm from './MyPageImageForm';
@@ -72,7 +72,7 @@ const MyPageFormPresenter = (props) => {
     );
   } else {
     return (
-      <MyPageNormalForm
+      <MyPageUserForm
         title={title}
         value={value}
         onGoBack={onGoBack}

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import MyPageFormPresenter from './MyPageFormPresenter';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 const MypageFormContainer = ({ match, history }) => {
@@ -30,20 +31,25 @@ const MypageFormContainer = ({ match, history }) => {
 
   const userid = localStorage.getItem('userid');
   const url = 'http://localhost:8000/users/profile/' + userid + '/';
-  const body = { param: value };
   const onProfileSubmit = useCallback(
     (e) => {
       axios
         .patch(url, {
           userid: userid,
-          profile_gender: value.userGender,
-          profile_region: value.userRegion,
+          profile_gender: value.profile_gender,
+          profile_region: value.profile_region,
+          profile_img: value.profile_img,
         })
         .then((response) => {
-          console.log(response.status);
+          const stauts = response.status;
+          if (stauts === 201) {
+            return <Redirect to="/mypage" />;
+          }
         })
-        .catch(() => {
-          window.location.href('/mypage');
+        .catch((error) => {
+          const status = error.status;
+          console.log(status);
+          alert(title + '을 수정할 수 없습니다.');
         });
       setValue([]);
     },

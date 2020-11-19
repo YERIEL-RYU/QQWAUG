@@ -24,7 +24,7 @@ const MypageGenderForm = (props) => {
           {title} 변경
         </Typography>
         <Divider />
-        <form onSubmit={onProfileSubmit}>
+        <form>
           <Grid
             container
             direction="row"
@@ -39,9 +39,9 @@ const MypageGenderForm = (props) => {
               <Select
                 labelId="userGender"
                 id="userGender"
-                name="userGender"
+                name="profile_gender"
                 fullWidth
-                value={value.userGender || ''}
+                value={value.profile_gender || ''}
                 onChange={onChange}
               >
                 <MenuItem value="">선택안함</MenuItem>
@@ -64,7 +64,12 @@ const MypageGenderForm = (props) => {
               </Button>
             </Grid>
             <Grid item xs={6} align="center">
-              <Button variant="contained" color={'primary'} type="submit">
+              <Button
+                variant="contained"
+                color={'primary'}
+                type="button"
+                onClick={onProfileSubmit}
+              >
                 등록
               </Button>
             </Grid>

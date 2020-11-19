@@ -40,30 +40,16 @@ const toolbarStyles = makeStyles((theme) => ({
 }));
 
 const OilToolbar = (props) => {
+  const {
+    numSelected,
+    DialogOpen,
+    onDialogOpen,
+    onDialogClose,
+    value,
+    onChange,
+    onSubmit,
+  } = props;
   const classes = toolbarStyles();
-  const { numSelected } = props;
-  const [DialogOpen, setOnDialogOpen] = useState(false);
-  const onDialogOpen = () => {
-    setOnDialogOpen(true);
-    console.log('주유내역 추가하기');
-  };
-  const onDialogClose = () => {
-    setOnDialogOpen(false);
-    console.log('Dialog 닫음');
-  };
-  const [value, setValue] = useState([]);
-  const onChange = useCallback(
-    (e) => {
-      console.log(e.target.value, e.target.name);
-      setValue({ ...value, [e.target.name]: e.target.value });
-      console.log(value);
-    },
-    [value],
-  );
-  const onSubmit = useCallback((e) => {
-    setValue('');
-    e.preventDefault();
-  }, []);
   return (
     <Toolbar
       className={clsx(classes.root, { [classes.highlight]: numSelected > 0 })}
@@ -113,8 +99,8 @@ const OilToolbar = (props) => {
                   autoFocus
                   margin="dense"
                   id="date"
-                  name="date"
-                  value={value.date || ''}
+                  name="oil_date"
+                  value={value.oil_date || ''}
                   type="date"
                   onChange={onChange}
                   fullWidth
@@ -123,9 +109,9 @@ const OilToolbar = (props) => {
                   margin="dense"
                   id="liter"
                   label="리터"
-                  name="liter"
+                  name="oil_liter"
                   type="number"
-                  value={value.liter || ''}
+                  value={value.oil_liter || ''}
                   onChange={onChange}
                   fullWidth
                 />
@@ -133,10 +119,10 @@ const OilToolbar = (props) => {
                   validate="filled"
                   margin="dense"
                   id="price"
-                  name="price"
+                  name="oil_price"
                   label="리터 당 가격"
                   type="number"
-                  value={value.price || ''}
+                  value={value.oil_price || ''}
                   onChange={onChange}
                   fullWidth
                 />
@@ -144,10 +130,12 @@ const OilToolbar = (props) => {
                   validate="filled"
                   margin="dense"
                   id="total"
-                  name="total"
+                  name="oil_total"
                   label="총 가격"
                   type="number"
-                  value={Number(value.price) * Number(value.liter) || ''}
+                  value={
+                    Number(value.oil_price) * Number(value.oil_liter) || ''
+                  }
                   onChange={onChange}
                   fullWidth
                 />
@@ -156,7 +144,7 @@ const OilToolbar = (props) => {
                 <Button onClick={onDialogClose} color="primary">
                   취소
                 </Button>
-                <Button color="primary" type="submit" onClick={onDialogClose}>
+                <Button color="primary" type="submit" onClick={onSubmit}>
                   등록
                 </Button>
               </DialogActions>
