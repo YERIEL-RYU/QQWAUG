@@ -148,15 +148,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_ROOT = ''
 
-STATIC_ROOT = ''
-
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join('static'), )
 
 # CORS_HEADES 설정
 CORS_ORIGIN_WHITELIST = [
-    'http://127.0.0.1:3000',
     'http://localhost:3000',
+    'http://127.0.0.1:3000',
     'http://localhost:8000',
 ]
 

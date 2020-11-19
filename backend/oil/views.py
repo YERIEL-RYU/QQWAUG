@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
@@ -15,7 +15,8 @@ from .serializers import OilSerializer
 class OilList(APIView):
     permission_classes = (AllowAny,)
     serializer_class = OilSerializer
-    parser_classes = (JSONParser)
+    authentication_classes = (JSONWebTokenAuthentication,)
+    parser_classes = (JSONParser, MultiPartParser)
 
     def get(self, request, format=None):
         queryset = Oil.objects.all()
@@ -23,6 +24,7 @@ class OilList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+        print(request.data)
         serializer = OilSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -42,8 +44,8 @@ class OilDetail(APIView):
             raise Http404
 
     def get(self, request, userid):
-        queryset = self.get_object(userid)
-        serializer = OilSerializer(queryset)
+        queryset = Oil.objects.filter(userid=userid)
+        serializer = OilSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, userid):

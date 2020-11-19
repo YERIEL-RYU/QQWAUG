@@ -16,7 +16,7 @@ class MycarList(APIView):
 
     def get_object(self, userid):
         try:
-            return Mycar.objects.filter(userid=userid).first
+            return Mycar.objects.filter(userid=userid).first()
         except:
             raise Http404
 

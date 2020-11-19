@@ -87,14 +87,15 @@ def user_directory_path(instance, filename):
 class Profiles(models.Model):
     REGION = (
         ('', '선택안함'),
-        ('seoul', '서울'),
-        ('incheon', '인천'),
-        ('busan', '부산')
+        ('서울', '서울'),
+        ('인천', '인천'),
+        ('부산', '부산'),
+        ('기타', '기타')
     )
     GENDER = (
         ('', '선택안함'),
-        ('F', 'F'),
-        ('M', 'M')
+        ('여성', '여성'),
+        ('남성', '남성')
     )
     userid = models.CharField(max_length=255, null=False, blank=False)
     profile_img = models.ImageField(
