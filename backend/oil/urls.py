@@ -3,8 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.OilAdminList.as_view()),
-    path('<str:userid>/', views.OilList.as_view()),
-    path('<str:userid>/<int:oilid>/', views.OilDetail.as_view()),
-
+    path('', views.OilList.as_view()),
+    path('<str:userid>/', views.OilDetail.as_view())
 ]
