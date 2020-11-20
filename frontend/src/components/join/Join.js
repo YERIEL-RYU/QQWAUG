@@ -109,7 +109,6 @@ const Join = () => {
         .then((response) => {
           const status = response.status;
           if (status === 200) {
-            console.log(response.data);
             setAlert('200 사용 가능한 아이디입니다.');
           }
         })

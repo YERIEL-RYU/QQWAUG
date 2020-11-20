@@ -56,7 +56,8 @@ const OilPresenter = (props) => {
   } = props;
   return (
     <Paper className={classes.paper}>
-      <OilToolbarContainer numSelected={selected.length} selected={selected} />
+      {console.log(datas)}
+      <OilToolbarContainer numSelected={selected.length} />
       <TableContainer>
         <Table
           className={classes.table}
@@ -76,17 +77,17 @@ const OilPresenter = (props) => {
             {stableSort(datas, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((data, index) => {
-                const isItemSelected = isSelected(data);
+                const isItemSelected = isSelected(data.oil_date);
                 const labelId = `oil-table-checkbox-${index}`;
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => onClick(event, data)}
+                    onClick={(event) => onClick(event, data.oil_date)}
                     role="checkbox"
                     aria-checked={isItemSelected}
-                    selected={isItemSelected}
                     tabIndex={-1}
-                    key={data.id}
+                    key={data.oil_date}
+                    selected={isItemSelected}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox

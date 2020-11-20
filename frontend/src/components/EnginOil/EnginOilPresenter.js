@@ -39,53 +39,108 @@ function datasSort(a, b) {
 }
 
 const EnginOilPresenter = (props) => {
-  const {
-    rowsPerPage,
-    PATH,
-    startRow,
-    endRow,
-    pageNumber,
-    enginoils,
-    onDelete,
-  } = props;
+  const { rowsPerPage, PATH, startRow, endRow, pageNumber } = props;
   const classes = useStyles();
+
+  const [datas, setDatas] = useState([
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.09.07',
+      where: '태광카센터',
+      km: 5500,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6001,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6002,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6003,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6004,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6005,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6006,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6007,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6008,
+    },
+    {
+      image: '/static/images/cards/contemplative-reptile.jpg',
+      date: '2020.10.03',
+      where: '쉐보레 서비스 센터',
+      km: 6009,
+    },
+  ]);
 
   return (
     <Container>
       <Grid container spacing={2} className={classes.root}>
         <EnginOilInputContainer classes={classes.card} />
-        {/* {enginoils.length !== 0 &&
+        {datas.length !== 0 &&
           (rowsPerPage > 0
-            ? enginoils.sort(datasSort).slice(startRow, endRow)
-            : enginoils
-          ).map((enginoil) => (
-            <Grid item key={enginoil.km}>
+            ? datas.sort(datasSort).slice(startRow, endRow)
+            : datas
+          ).map((data) => (
+            <Grid item key={data.km}>
               <Card className={classes.card}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    alt={enginoil.date}
+                    alt={data.date}
                     height="140"
-                    image={enginoil.image}
-                    title={enginoil.date}
+                    image={data.image}
+                    title={data.date}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {enginoil.date}
+                      {data.date}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
-                      {enginoil.where}
+                      {data.where}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
-                      {enginoil.km} Km
+                      {data.km} Km
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -93,20 +148,20 @@ const EnginOilPresenter = (props) => {
                   <Button size="small" color="primary">
                     수정
                   </Button>
-                  <Button size="small" color="primary" onClick={onDelete}>
+                  <Button size="small" color="primary">
                     삭제
                   </Button>
                 </CardActions>
               </Card>
             </Grid>
-          ))} */}
+          ))}
       </Grid>
-      {/* <PaginationContainer
+      <PaginationContainer
         rowsPerPage={rowsPerPage}
         PATH={PATH}
-        enginoils={enginoils}
+        datas={datas}
         pageNumber={pageNumber}
-      /> */}
+      />
     </Container>
   );
 };

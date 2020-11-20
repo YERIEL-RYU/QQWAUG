@@ -27,7 +27,7 @@ const OilContainer = () => {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowPerPage] = useState(5);
-  const isSelected = (id) => selected.indexOf(id) !== -1;
+  const isSelected = (date) => selected.indexOf(date) !== -1;
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, datas.length - page * rowsPerPage);
 
@@ -74,12 +74,12 @@ const OilContainer = () => {
   };
 
   //체크박스 클릭
-  const onClick = (event, data) => {
-    const selectedIndex = selected.indexOf(data);
+  const onClick = (date) => {
+    const selectedIndex = selected.indexOf(date);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, data);
+      newSelected = newSelected.concat(selected, date);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -92,7 +92,7 @@ const OilContainer = () => {
     }
     setSelected(newSelected);
   };
-  console.log(selected);
+
   //페이지 이동
   const onChangePage = (newPage) => {
     setPage(newPage);

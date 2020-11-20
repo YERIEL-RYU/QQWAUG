@@ -3,14 +3,15 @@ import OilToolbarPresenter from './OilToolbar';
 import axios from 'axios';
 
 const OilToolbarContainer = (props) => {
-  const { numSelected, selected } = props;
-  console.log(numSelected);
+  const { numSelected } = props;
   const [DialogOpen, setOnDialogOpen] = useState(false);
   const onDialogOpen = () => {
     setOnDialogOpen(true);
+    console.log('주유내역 추가하기');
   };
   const onDialogClose = () => {
     setOnDialogOpen(false);
+    console.log('Dialog 닫음');
   };
   const [value, setValue] = useState([]);
   const onChange = useCallback(
@@ -40,18 +41,6 @@ const OilToolbarContainer = (props) => {
     },
     [value],
   );
-  const onDelete = useCallback(() => {
-    const userid = localStorage.getItem('userid');
-    const token = localStorage.getItem('token');
-    console.log(selected[0].id);
-    const id = selected[0].id;
-    const url = 'http://localhost:8000/oil/' + userid + '/' + id + '/';
-    axios.delete(url, {
-      headers: {
-        Authorization: 'JWT ' + token,
-      },
-    });
-  });
   return (
     <OilToolbarPresenter
       numSelected={numSelected}
@@ -61,7 +50,6 @@ const OilToolbarContainer = (props) => {
       value={value}
       onChange={onChange}
       onSubmit={onSubmit}
-      onDelete={onDelete}
     />
   );
 };
