@@ -21,11 +21,12 @@ class DuplicateUserid(APIView):
     serializer_class = UserSerializer
 
     def get(self, request, userid):
-        print(userid)
+        print(request)
+        print('입력 받은 유저 id : '+userid)
         queryset = User.objects.filter(userid=userid)
         serializer = UserSerializer(queryset, many=True)
         if not serializer.data:
-            print('empty')
+            print('검색 결과 : '+userid+' 사용가능')
             return Response({"message": "You can make userid"}, status=status.HTTP_200_OK)
         return Response({"message": "duplicate userid"}, status=status.HTTP_409_CONFLICT)
 
