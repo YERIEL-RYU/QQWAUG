@@ -16,7 +16,6 @@ class OilList(APIView):
     permission_classes = (AllowAny,)
     serializer_class = OilSerializer
     authentication_classes = (JSONWebTokenAuthentication,)
-    parser_classes = (JSONParser, MultiPartParser)
 
     def get(self, request, format=None):
         queryset = Oil.objects.all()
@@ -32,31 +31,41 @@ class OilList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class OilDetail(APIView):
+class OilListDetail(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = OilSerializer
     authentication_classes = (JSONWebTokenAuthentication,)
 
     def get_object(self, userid):
         try:
-            return Oil.objects.get(userid=userid)
+            return Oil.objects.filter(userid=userid)
         except:
             raise Http404
 
+
     def get(self, request, userid):
-        queryset = Oil.objects.filter(userid=userid)
+        queryset = self.get_object(userid=userid)
         serializer = OilSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request, userid):
-        Oil = self.get_object(userid=userid)
-        serializer = OilSerializer(Oil, data=request.data)
+    def delete(self, request,userid):
+        oilid = request.data['oilid']
+        queryset = Oil.objects.get(pk=oilid)
+        queryset.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class OilDetail(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = OilSerializer
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    def put(self, request, userid ,oilid):
+        oil = Oil.objects.get(pk=oilid, userid=userid)
+        serializer = OilSerializer(oil, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, userid):
-        Oil = self.get_object(userid=userid)
-        Oil.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    
