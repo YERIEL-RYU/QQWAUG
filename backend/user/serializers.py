@@ -56,9 +56,7 @@ class UserLoginSerializer(serializers.Serializer):
     def validate(self, data):
         userid = data.get('userid', None)
         password = data.get('password', None)
-        user = authenticate(
-            userid=userid, password=password)
-
+        user = authenticate(userid=userid, password=password)
         if user is None:
             return {
                 'userid': 'None'

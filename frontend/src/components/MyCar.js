@@ -46,8 +46,8 @@ const MyCar = () => {
           {
             carMaker: car_company,
             carName: car_name,
-            carYear: car_oil,
-            oilKind: car_old,
+            carYear: car_old,
+            oilKind: car_oil,
             carNum: car_number,
           },
         ]),

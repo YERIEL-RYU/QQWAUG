@@ -40,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'rest_framework_jwt',
     'corsheaders',
+    'debug_toolbar',
 
     'user',
     'mycar',
@@ -50,14 +51,17 @@ INSTALLED_APPS = [
     'engin',
 ]
 
+AUTH_USER_MODEL = 'user.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'corsheaders.middleware.CorsMiddleware',
 ]
@@ -106,7 +110,7 @@ DATABASES = {
         'USER': 'yeriel',
         'PASSWORD': '4564',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '5432',
     }
 }
 
@@ -159,17 +163,20 @@ CORS_ORIGIN_WHITELIST = [
 
 
 JWT_AUTH = {
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
+    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
     'JWT_SECRET_KEY': SECRET_KEY,  # jwt에서 사용할 비밀키 설정 현재 django의 비밀키와 같음
     'JWT_ALGORITHM': 'HS256',  # 암호화에서 사용되는 알고리즘 지정
     'JWT_ALLOW_REFRESH': True,  # 토큰을 갱신 할 수 있는지 여부
     'JWT_EXPIRATION_DELTA': timedelta(hours=3),  # 토큰의 유효기간
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=1),
     # 토큰 갱신의 유효기간 : 7일씩 4번 갱신 할 수 있고 28일 후에는 로그아웃 처리됨
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
 
 ACCOUNT_LOGOUT_ON_GET = True
 
-AUTH_USER_MODEL = 'user.User'
+
 
 # LOGGING = {
 #     'version': 1,
