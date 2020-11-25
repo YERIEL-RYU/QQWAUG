@@ -43,7 +43,7 @@ const OilPresenter = (props) => {
     order,
     orderBy,
     onSelectAllClick,
-    createSortHandler,
+    onRequestSort,
     stableSort,
     getComparator,
     isSelected,
@@ -56,7 +56,8 @@ const OilPresenter = (props) => {
   } = props;
   return (
     <Paper className={classes.paper}>
-      <OilToolbarContainer numSelected={selected.length} selected={selected}/>
+      {console.log(datas)}
+      <OilToolbarContainer numSelected={selected.length} />
       <TableContainer>
         <Table
           className={classes.table}
@@ -69,19 +70,19 @@ const OilPresenter = (props) => {
             order={order}
             orderBy={orderBy}
             onSelectAllClick={onSelectAllClick}
-            createSortHandler={createSortHandler}
+            onRequestSort={onRequestSort}
             rowCount={datas.length}
           />
           <TableBody>
             {stableSort(datas, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((data, index) => {
-                const isItemSelected = isSelected(data);
+                const isItemSelected = isSelected(data.oil_date);
                 const labelId = `oil-table-checkbox-${index}`;
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => onClick(event, data)}
+                    onClick={(event) => onClick(event, data.oil_date)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -90,7 +91,6 @@ const OilPresenter = (props) => {
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        onClick={(event) => onClick(event, data)}
                         checked={isItemSelected}
                         inputProps={{ 'aria-labelledby': labelId }}
                       />
@@ -118,7 +118,7 @@ const OilPresenter = (props) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 15, 20]}
+        rowsPerPageOptions={[5, 10, 25]}
         component="div"
         count={datas.length}
         rowsPerPage={rowsPerPage}
