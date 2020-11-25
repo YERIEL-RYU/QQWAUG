@@ -9,25 +9,25 @@ import TableCell from '@material-ui/core/TableCell';
 
 const cells = [
   {
-    id: 'date',
+    id: 'oil_date',
     numeric: false,
     disablePadding: true,
     label: '날짜',
   },
   {
-    id: 'liter',
+    id: 'oil_liter',
     numeric: true,
     disablePadding: false,
     label: '리터(L)',
   },
   {
-    id: 'price',
+    id: 'oil_price',
     numeric: true,
     disablePadding: false,
     label: '가격(원)',
   },
   {
-    id: 'total',
+    id: 'oil_total',
     numeric: true,
     disablePadding: false,
     label: '총 액(원)',
@@ -42,12 +42,8 @@ const OilTableHead = (props) => {
     orderBy,
     numSelected,
     rowCount,
-    onRequestSort,
+    createSortHandler
   } = props;
-
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
 
   return (
     <TableHead>
@@ -91,7 +87,6 @@ export default OilTableHead;
 OilTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,

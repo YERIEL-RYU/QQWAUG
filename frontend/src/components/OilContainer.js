@@ -22,17 +22,19 @@ const OilContainer = () => {
       .then((oils) => setDatas(oils));
   }, []);
 
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('date');
+  const [order, setOrder] = useState('desc');
+  const [orderBy, setOrderBy] = useState('oil_date');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowPerPage] = useState(5);
-  const isSelected = (date) => selected.indexOf(date) !== -1;
+  const [rowsPerPage, setRowPerPage] = useState(10);
+  const isSelected = (data) => selected.indexOf(data) !== -1;
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, datas.length - page * rowsPerPage);
-
+    const createSortHandler = (property) => (event) => {
+      onRequestSort(event, property);
+    };
   //데이터 정렬
-  const onRequestSort = (property) => {
+  const onRequestSort = (evnet, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -48,7 +50,7 @@ const OilContainer = () => {
   };
 
   const getComparator = (order, orderBy) => {
-    return order === 'asc'
+    return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   };
@@ -66,7 +68,7 @@ const OilContainer = () => {
   //체크박스 전체 클릭
   const onSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = datas.map((n) => n.date);
+      const newSelecteds = datas
       setSelected(newSelecteds);
       return;
     }
@@ -74,12 +76,12 @@ const OilContainer = () => {
   };
 
   //체크박스 클릭
-  const onClick = (date) => {
-    const selectedIndex = selected.indexOf(date);
+  const onClick = (event,data) => {
+    const selectedIndex = selected.indexOf(data);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, date);
+      newSelected = newSelected.concat(selected, data);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -92,9 +94,10 @@ const OilContainer = () => {
     }
     setSelected(newSelected);
   };
+  
 
   //페이지 이동
-  const onChangePage = (newPage) => {
+  const onChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
@@ -113,6 +116,7 @@ const OilContainer = () => {
       orderBy={orderBy}
       onSelectAllClick={onSelectAllClick}
       onRequestSort={onRequestSort}
+      createSortHandler={createSortHandler}
       //table body
       stableSort={stableSort}
       getComparator={getComparator}
