@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Container, Grid } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import EnginOilInputContainer from './EnginOilInputContainer';
 import PaginationContainer from '../Pagination/PaginationContainer';
 
@@ -29,137 +30,97 @@ const useStyles = makeStyles({
   },
 });
 function datasSort(a, b) {
-  if (Number(a.km) < Number(b.km)) {
+  if (Number(a.change_km) < Number(b.change_km)) {
     return 1;
   }
-  if (Number(a.km) > Number(b.km)) {
+  if (Number(a.change_km) > Number(b.change_km)) {
     return -1;
   }
   return 0;
 }
 
 const EnginOilPresenter = (props) => {
-  const { rowsPerPage, PATH, startRow, endRow, pageNumber } = props;
+  const { 
+    enginoils,
+    rowsPerPage, 
+    PATH, 
+    startRow, 
+    endRow, 
+    pageNumber, 
+    onDelete,
+    title,
+    onDialogOpen,
+    DialogOpen,
+    setOnDialogOpen,
+    onModify,
+    enginoilId
+  } = props;
   const classes = useStyles();
-
-  const [datas, setDatas] = useState([
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.09.07',
-      where: '태광카센터',
-      km: 5500,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6001,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6002,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6003,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6004,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6005,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6006,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6007,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6008,
-    },
-    {
-      image: '/static/images/cards/contemplative-reptile.jpg',
-      date: '2020.10.03',
-      where: '쉐보레 서비스 센터',
-      km: 6009,
-    },
-  ]);
-
   return (
     <Container>
       <Grid container spacing={2} className={classes.root}>
-        <EnginOilInputContainer classes={classes.card} />
-        {datas.length !== 0 &&
+      <Grid item>
+      <Card className={classes.card}>
+        <CardActionArea style={{ height: 300 }} onClick={onDialogOpen}>
+          <CardContent>
+            <AddIcon fontSize="large" />
+          </CardContent>
+        </CardActionArea>
+      </Card>
+        
+      </Grid>
+        {enginoils.length !== 0 &&
           (rowsPerPage > 0
-            ? datas.sort(datasSort).slice(startRow, endRow)
-            : datas
+            ? enginoils.sort(datasSort).slice(startRow, endRow)
+            : enginoils
           ).map((data) => (
-            <Grid item key={data.km}>
+            <Grid item key={data.id}>
               <Card className={classes.card}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    alt={data.date}
+                    alt={data.id}
                     height="140"
-                    image={data.image}
-                    title={data.date}
+                    image={data.enginoil_img===null?'not image': 'http://localhost:8000/'+data.enginoil_img}
+                    title={data.change_date}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {data.date}
+                      {data.change_date}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
-                      {data.where}
+                      {data.center}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
-                      {data.km} Km
+                      {data.change_km} Km
                     </Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions className={classes.button}>
-                  <Button size="small" color="primary">
+                  <Button size="small" id={data.id} color="primary" onClick={onModify}>
                     수정
                   </Button>
-                  <Button size="small" color="primary">
+                  <Button size="small" id={data.id} color="primary" onClick={onDelete}>
                     삭제
                   </Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
+          <EnginOilInputContainer title={title} enginoilId={enginoilId} onDialogOpen={onDialogOpen} DialogOpen={DialogOpen} setOnDialogOpen={setOnDialogOpen}/>
       </Grid>
       <PaginationContainer
         rowsPerPage={rowsPerPage}
         PATH={PATH}
-        datas={datas}
+        datas={enginoils}
         pageNumber={pageNumber}
       />
     </Container>
