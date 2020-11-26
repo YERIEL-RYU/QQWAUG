@@ -11,7 +11,7 @@ def set_imagename_format(now, instance, filename):
     print(os.path.splitext(filename)[1])
     return "{username}-{date}{extension}".format(
         username=instance.userid,
-        date=str(now.date()+now.time()),
+        date=str(now),
         extension=os.path.splitext(filename)[1],
     )
 
