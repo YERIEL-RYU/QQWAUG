@@ -42,12 +42,9 @@ const OilTableHead = (props) => {
     orderBy,
     numSelected,
     rowCount,
-    onRequestSort,
+    createSortHandler
   } = props;
 
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
 
   return (
     <TableHead>

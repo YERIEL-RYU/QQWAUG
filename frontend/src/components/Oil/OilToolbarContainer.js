@@ -3,7 +3,7 @@ import OilToolbarPresenter from './OilToolbar';
 import axios from 'axios';
 
 const OilToolbarContainer = (props) => {
-  const { numSelected } = props;
+  const { numSelected, selected } = props;
   const [DialogOpen, setOnDialogOpen] = useState(false);
   const onDialogOpen = () => {
     setOnDialogOpen(true);
@@ -33,14 +33,38 @@ const OilToolbarContainer = (props) => {
           oil_date: value.oil_date,
           oil_liter: value.oil_liter,
           oil_price: value.oil_price,
-          oil_total: value.oil_total,
-        })
+          oil_total: value.oil_liter*value.oil_price,
+        }).then((response)=>{console.log(response.status)
+        window.location.reload()}
+        )
         .catch((error) => console.error());
       setValue('');
       onDialogClose();
     },
     [value],
   );
+  const onDelete = useCallback((e)=>{
+    const userid = localStorage.getItem('userid');
+    const token = localStorage.getItem('token');
+    const url = `http://localhost:8000/oil/${userid}/`;
+    const oilid = selected[0].id
+    axios.delete(url,{
+      headers:{
+        Authorization: `JWT ${token}` 
+      },
+      data: {
+        oilid: oilid
+      }
+    }).then((response)=>{
+      if(response.status===204){
+        window.alert('삭제 되었습니다.');
+        window.location.reload()
+      }
+      else{
+        window.alert('삭제 할 수 없습니다.')
+      }
+    })
+  },[selected])
   return (
     <OilToolbarPresenter
       numSelected={numSelected}
@@ -50,6 +74,7 @@ const OilToolbarContainer = (props) => {
       value={value}
       onChange={onChange}
       onSubmit={onSubmit}
+      onDelete={onDelete}
     />
   );
 };

@@ -48,6 +48,7 @@ const OilToolbar = (props) => {
     value,
     onChange,
     onSubmit,
+    onDelete
   } = props;
   const classes = toolbarStyles();
   return (
@@ -75,7 +76,7 @@ const OilToolbar = (props) => {
       )}
       {numSelected > 0 ? (
         <Tooltip title="해당 내역 삭제">
-          <IconButton aria-label="delete">
+          <IconButton aria-label="delete" onClick={onDelete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
