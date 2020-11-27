@@ -4,13 +4,14 @@ import {
   CssBaseline,
   Divider,
   Grid,
+  Input,
   Paper,
   TextField,
   Typography,
 } from '@material-ui/core';
 
 const MyPageNormalFrom = (props) => {
-  const { title, classes, onGoBack, value, onChange } = props;
+  const { title, classes, onGoBack, value, onChange, onUserSubmit } = props;
   return (
     <Paper className={classes.root}>
       <CssBaseline />
@@ -39,7 +40,8 @@ const MyPageNormalFrom = (props) => {
               name={title === '비밀번호' ? 'password' : 'useremail'}
               type={title === '비밀번호' ? 'password' : 'email'}
               placeholder={title === '비밀번호' ? '' : 'example@qqing.com'}
-              value={title === '비밀번호' ? value.password : value.useremail}
+              value={title === '비밀번호' ? value.password || '': value.useremail ||''}
+              onChange={onChange}
             ></TextField>
           </Grid>
         </Grid>
@@ -57,7 +59,7 @@ const MyPageNormalFrom = (props) => {
             </Button>
           </Grid>
           <Grid item xs={6} align="center">
-            <Button variant="contained" color={'primary'} type="button">
+            <Button variant="contained" color={'primary'} type="button" onClick={onUserSubmit}>
               등록
             </Button>
           </Grid>

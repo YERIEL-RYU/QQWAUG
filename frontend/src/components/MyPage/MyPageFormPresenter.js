@@ -35,13 +35,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MyPageFormPresenter = (props) => {
-  const { title, onGoBack, onProfileSubmit, onChange, value } = props;
+  const { title, onGoBack, onProfileSubmit, onChange, userValue, profileValue, onUserSubmit} = props;
   const classes = useStyles();
   if (title === '지역') {
     return (
       <MyPageRegionForm
         title={title}
-        value={value}
+        value={profileValue}
         onGoBack={onGoBack}
         classes={classes}
         onProfileSubmit={onProfileSubmit}
@@ -52,7 +52,7 @@ const MyPageFormPresenter = (props) => {
     return (
       <MyPageGenderForm
         title={title}
-        value={value}
+        value={profileValue}
         onGoBack={onGoBack}
         classes={classes}
         onProfileSubmit={onProfileSubmit}
@@ -63,7 +63,7 @@ const MyPageFormPresenter = (props) => {
     return (
       <MyPageImageForm
         title={title}
-        value={value}
+        value={profileValue}
         onGoBack={onGoBack}
         classes={classes}
         onProfileSubmit={onProfileSubmit}
@@ -74,10 +74,11 @@ const MyPageFormPresenter = (props) => {
     return (
       <MyPageUserForm
         title={title}
-        value={value}
+        value={userValue}
         onGoBack={onGoBack}
         classes={classes}
         onChange={onChange}
+        onUserSubmit={onUserSubmit}
       />
     );
   }

@@ -45,8 +45,8 @@ const MypageGenderForm = (props) => {
                 onChange={onChange}
               >
                 <MenuItem value="">선택안함</MenuItem>
-                <MenuItem value="F">여성</MenuItem>
-                <MenuItem value="M">남성</MenuItem>
+                <MenuItem value="여성">여성</MenuItem>
+                <MenuItem value="남성">남성</MenuItem>
               </Select>
             </Grid>
           </Grid>

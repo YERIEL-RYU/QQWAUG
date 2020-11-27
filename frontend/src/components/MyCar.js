@@ -93,7 +93,7 @@ const MyCar = () => {
           </StyledTableRow>
           <StyledTableRow>
             <TableCell className={classes.cell}>연식</TableCell>
-            {myCar[0].carYear === '' ? (
+            {myCar[0].carYear === null ? (
               <TableCell align="center">등록 된 정보가 없습니다.</TableCell>
             ) : (
               <TableCell align="center">{myCar[0].carYear}</TableCell>
@@ -101,7 +101,7 @@ const MyCar = () => {
           </StyledTableRow>
           <StyledTableRow>
             <TableCell className={classes.cell}>유종</TableCell>
-            {myCar[0].oilKind === '' ? (
+            {myCar[0].oilKind === null ? (
               <TableCell align="center">등록 된 정보가 없습니다.</TableCell>
             ) : (
               <TableCell align="center">{myCar[0].oilKind}</TableCell>
