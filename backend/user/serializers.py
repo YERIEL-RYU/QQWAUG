@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'userid', 'password', 'username', 'useremail']
-        extra_kwargs = {'password': {'write_only': True}}
+        # extra_kwargs = {'password': {'write_only': True}}
 
 
 """
@@ -74,6 +74,7 @@ class UserLoginSerializer(serializers.Serializer):
             'token': jwt_token,
 
         }
+
 
 
 """

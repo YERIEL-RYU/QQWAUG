@@ -1,8 +1,7 @@
-import json
 from django.http import Http404
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, status
-from rest_framework.permissions import AllowAny
+from rest_framework import  status
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
@@ -10,10 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from .serializers import UserLoginSerializer, UserCreateSerializer, UserSerializer, ProfileSerializer
-from .permissions import IsUserOrReadOnly
 from .models import User, Profiles
 
-from urllib.parse import parse_qs
 
 
 class DuplicateUserid(APIView):
@@ -32,7 +29,7 @@ class DuplicateUserid(APIView):
 
 class Profile(APIView):
     permission_classes = (AllowAny,)
-    serializer_class = ProfileSerializer, UserSerializer
+    serializer_class = ProfileSerializer
     parser_classes = (JSONParser, MultiPartParser)
 
     def post(self, request):
@@ -83,7 +80,7 @@ def login(request):
         serializer = UserLoginSerializer(data=request.data)
 
         if not serializer.is_valid(raise_exception=True):
-            return Response({"message": "Request Body Error."}, status=status.HTTP_409_CONFLICT)
+            return Response({"message": "Request Body Error."}, status=status.HTTP_401_UNAUTHORIZED)
         if serializer.validated_data['userid'] == "None":
             return Response({'message': 'fail'}, status=status.HTTP_409_CONFLICT)
 
@@ -107,3 +104,25 @@ def createUser(request):
             serializer.save()
             return Response({"message": "ok"}, status=status.HTTP_201_CREATED)
         return Response({"message": "duplicate userid"}, status=status.HTTP_409_CONFLICT)
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def modifyUser(request, userid):
+    if request.method == 'PATCH':
+        print(request.data)
+        try :
+            queryset = User.objects.get(userid=userid)
+            print(queryset)
+        except :
+            raise Http404
+        if (request.data['password'] == ''):
+            queryset.useremail = request.data['useremail']
+            queryset.save()
+            return Response({"success"}, status=status.HTTP_201_CREATED)
+        elif (request.data['useremail']==''):
+            queryset.set_password(request.data['password'])
+            queryset.save()
+            return Response({"success"}, status=status.HTTP_201_CREATED)
+    return Response({"message": "400 Bad request"}, status=status.HTTP_400_BAD_REQUEST)
+    
