@@ -27,6 +27,7 @@ const MyPageImageForm = (props) => {
   };
   return (
     <Paper className={classes.root}>
+      {console.log(value.profile_img)}
       <CssBaseline />
       <Typography variant="h4" className={classes.title}>
         My Page
@@ -54,7 +55,6 @@ const MyPageImageForm = (props) => {
               fullWidth
               type="file"
               accept="image/jpg, image/png, image/jpeg, image/gif"
-              // value={value.profile_img.name || ''}
               onChange={onFileChange}
             />
             <Grid item>

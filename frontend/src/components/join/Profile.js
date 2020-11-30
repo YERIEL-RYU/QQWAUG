@@ -13,7 +13,7 @@ const Profile = ({ profileValue, onChange }) => {
   const [file, setFile] = useState(null);
   const onFileChange = (e) => {
     if (e.target.files[0]) {
-      console.log('file: ', e.target.files);
+      console.log(e.target.files[0]);
       setFile(e.target.files[0]);
       const reader = new FileReader();
       reader.addEventListener('load', () => {
@@ -36,13 +36,12 @@ const Profile = ({ profileValue, onChange }) => {
           <label>프로필 사진</label>
           <Input
             id="userImg"
-            name="userImg"
+            name="profile_img"
             label="프로필 사진"
             fullWidth
             type="file"
             accept="image/jpg, image/png, image/jpeg, image/gif"
             onChange={onFileChange}
-            value={profileValue.img}
           />
         </Grid>
         <Grid item>
@@ -63,14 +62,14 @@ const Profile = ({ profileValue, onChange }) => {
           <Select
             labelId="userGender"
             id="userGender"
-            name="userGender"
+            name="profile_gender"
             fullWidth
-            value={profileValue.userGender || ''}
+            value={profileValue.profile_gender || ''}
             onChange={onChange}
           >
             <MenuItem value="">선택안함</MenuItem>
-            <MenuItem value="F">여성</MenuItem>
-            <MenuItem value="M">남성</MenuItem>
+            <MenuItem value="여성">여성</MenuItem>
+            <MenuItem value="남성">남성</MenuItem>
           </Select>
         </Grid>
         <Grid item xs={12}>
@@ -78,16 +77,16 @@ const Profile = ({ profileValue, onChange }) => {
           <Select
             labelId="userRegion"
             id="userRegion"
-            name="userRegion"
+            name="profile_region"
             fullWidth
-            value={profileValue.userRegion || ''}
+            value={profileValue.profile_region || ''}
             onChange={onChange}
           >
             <MenuItem value="">선택 안함</MenuItem>
-            <MenuItem value="seoul">서울</MenuItem>
-            <MenuItem value="busan">부산</MenuItem>
-            <MenuItem value="incheon">인천</MenuItem>
-            <MenuItem value="">기타</MenuItem>
+            <MenuItem value="서울">서울</MenuItem>
+            <MenuItem value="부산">부산</MenuItem>
+            <MenuItem value="인천">인천</MenuItem>
+            <MenuItem value="기타">기타</MenuItem>
           </Select>
         </Grid>
       </Grid>

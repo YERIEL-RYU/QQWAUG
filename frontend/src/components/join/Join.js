@@ -94,7 +94,14 @@ const Join = () => {
         setJoinValue({ ...joinValue, [e.target.name]: e.target.value });
         console.log(joinValue);
       } else {
-        setProfileValue({ ...profileValue, [e.target.name]: e.target.value });
+        const name = e.target.name
+        console.log(name)
+        if(name === 'profile_img'){
+          const value = e.target.files[0];
+          setProfileValue({ ...profileValue, [name]: value});
+        }else {
+          setProfileValue({ ...profileValue, [name]: e.target.value});
+        }
         console.log(profileValue);
       }
     },
@@ -127,7 +134,7 @@ const Join = () => {
     (e) => {
       console.log(joinValue, profileValue, 'onSubmit');
       const { userId, userPw, userName, userEmail } = joinValue;
-      const { userImg, userGender, userRegion } = profileValue;
+      const { profile_img, profile_gender, profile_region } = profileValue;
       axios
         .post('http://localhost:8000/users/create/', {
           userid: userId,
@@ -145,9 +152,9 @@ const Join = () => {
         axios
           .post('http://localhost:8000/users/profile/', {
             userid: userId,
-            profile_img: userImg,
-            profile_gender: userGender,
-            profile_region: userRegion,
+            profile_img: profile_img,
+            profile_gender: profile_gender,
+            profile_region: profile_region,
           })
           .then((response) => {
             console.log(response.data,'profile');
