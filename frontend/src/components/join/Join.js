@@ -127,7 +127,7 @@ const Join = () => {
     (e) => {
       console.log(joinValue, profileValue, 'onSubmit');
       const { userId, userPw, userName, userEmail } = joinValue;
-      const { img, userGender, userRegion } = profileValue;
+      const { userImg, userGender, userRegion } = profileValue;
       axios
         .post('http://localhost:8000/users/create/', {
           userid: userId,
@@ -136,7 +136,7 @@ const Join = () => {
           useremail: userEmail,
         })
         .then((response) => {
-          console.log(response.status);
+          console.log(response.status,'user');
         })
         .catch((error) => {
           console.log(error.response);
@@ -145,12 +145,12 @@ const Join = () => {
         axios
           .post('http://localhost:8000/users/profile/', {
             userid: userId,
-            profile_img: img,
+            profile_img: userImg,
             profile_gender: userGender,
             profile_region: userRegion,
           })
           .then((response) => {
-            console.log(response.data);
+            console.log(response.data,'profile');
           })
           .catch((error) => {
             console.log(error);

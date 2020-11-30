@@ -38,12 +38,20 @@ const MypageFormContainer = ({ match, history }) => {
   const onProfileSubmit = useCallback(
     (e) => {
       const url = 'http://localhost:8000/users/profile/' + userid + '/';
+      const form_data = new FormData();
+      form_data.append('userid',userid);
+      if(profileValue.profile_img !== undefined){
+        form_data.append('profile_img', profileValue.profile_img, profileValue.profile_img.name);
+      }else if (profileValue.profile_region !== undefined){
+        form_data.append('profiel_region',profileValue.profile_region)
+      }else if (profileValue.profile_gender !== undefined) {
+        form_data.append('profiel_gender',profileValue.profile_gender)
+      }
       axios
-        .patch(url, {
-          userid: userid,
-          profile_gender: profileValue.profile_gender,
-          profile_region: profileValue.profile_region,
-          profile_img: profileValue.profile_img,
+        .patch(url, form_data, {
+          headers:{
+            "content-Type" :  `multipart/form-data;`
+          }
         })
         .then((response) => {
           const stauts = response.status;
@@ -52,8 +60,7 @@ const MypageFormContainer = ({ match, history }) => {
           }
         })
         .catch((error) => {
-          const status = error.status;
-          console.log(status);
+          console.log(error);
           alert(title + '을 수정할 수 없습니다.');
         });
       setProfileValue([]);
@@ -63,7 +70,7 @@ const MypageFormContainer = ({ match, history }) => {
 
   //user update
   const onUserSubmit = useCallback((e)=>{
-    const url = `http://localhost:8000/users/${userid}/`
+    const url = `http://localhost:8000/users/user/${userid}/`
     const token = localStorage.getItem('token')
     axios.patch(url,{
       userid: userid,
@@ -86,11 +93,19 @@ const MypageFormContainer = ({ match, history }) => {
 
   //value change
   const onChange = useCallback((e) => {
+    // console.log(e.target.files[0].name)
     const name = e.target.name;
-    const value = e.target.value;
-    setUserValue({ [name]: value })
-    setProfileValue({ [name]: value });
-    console.log(name, value);
+    if(name !== 'profile_img'){
+      const value = e.target.value;
+      setUserValue({ [name]: value })
+      setProfileValue({ [name]: value });
+      console.log(name, value);
+    }
+    else {
+      const value = e.target.files[0];
+      setProfileValue({ [name]: value });
+      console.log(name, value);
+    }
   });
   return (
     <MyPageFormPresenter

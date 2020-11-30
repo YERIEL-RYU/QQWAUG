@@ -15,7 +15,7 @@ const MyPageImageForm = (props) => {
   const [file, setFile] = useState(null);
   const onFileChange = (e) => {
     if (e.target.files[0]) {
-      console.log('file: ', e.target.files);
+      console.log('file: ', e.target.files[0].name);
       setFile(e.target.files[0]);
       const reader = new FileReader();
       reader.addEventListener('load', () => {
@@ -23,7 +23,7 @@ const MyPageImageForm = (props) => {
       });
       reader.readAsDataURL(e.target.files[0]);
     }
-    onChange(file);
+    onChange(e);
   };
   return (
     <Paper className={classes.root}>
@@ -54,7 +54,7 @@ const MyPageImageForm = (props) => {
               fullWidth
               type="file"
               accept="image/jpg, image/png, image/jpeg, image/gif"
-              value={value.profile_img || ''}
+              // value={value.profile_img.name || ''}
               onChange={onFileChange}
             />
             <Grid item>

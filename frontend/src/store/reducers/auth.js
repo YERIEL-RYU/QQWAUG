@@ -18,7 +18,7 @@ const api = axios.create({
   baseURI: 'http://localhost:8000/',
 });
 
-//action 함수
+//Login action 함수
 export const login = () => ({
   type: LOGIN,
 });
@@ -31,10 +31,7 @@ export const loginFailure = (error) => ({
   type: LOGIN_FAILURE,
   error,
 });
-export const logout = () => ({
-  type: LOGOUT,
-  isLoggedIn: false,
-});
+
 export const loginRequest = (userid, password) => {
   return (dispatch) => {
     dispatch(login());
@@ -73,6 +70,12 @@ export const loginRequest = (userid, password) => {
       });
   };
 };
+
+//Logout action 함수
+export const logout = () => ({
+  type: LOGOUT,
+  isLoggedIn: false,
+});
 export const logoutRequest = () => {
   return (dispatch) => {
     dispatch(logout());
@@ -80,6 +83,7 @@ export const logoutRequest = () => {
   };
 };
 
+//Profile action 함수
 export const user = () => ({
   type: USER,
 });
