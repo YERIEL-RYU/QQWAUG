@@ -12,7 +12,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'userid', 'password', 'username', 'useremail']
+        fields = ['id', 'userid', 'username', 'useremail']
         # extra_kwargs = {'password': {'write_only': True}}
 
 
@@ -63,7 +63,9 @@ class UserLoginSerializer(serializers.Serializer):
             }
         try:
             payload = JWT_PAYLOAD_HANDLER(user)
+            print(payload,'UserLoginSerializer payload')
             jwt_token = JWT_ENCODE_HANDLER(payload)
+            print(jwt_token, 'UserLoginSerializer jwt_token')
             update_last_login(None, user)
         except User.DoesNotExist:
             raise serializers.ValidationError(

@@ -115,15 +115,14 @@ def modifyUser(request, userid):
         print(request.data)
         try :
             queryset = User.objects.get(userid=userid)
-            print(queryset)
         except :
             raise Http404
-        if (request.data['password'] == ''):
-            queryset.useremail = request.data['useremail']
+        if not (request.data['password'] == ''):
+            queryset.set_password(request.data['password'])
             queryset.save()
             return Response({"success"}, status=status.HTTP_201_CREATED)
         elif (request.data['useremail']==''):
-            queryset.set_password(request.data['password'])
+            queryset.useremail = request.data['useremail']
             queryset.save()
             return Response({"success"}, status=status.HTTP_201_CREATED)
     return Response({"message": "400 Bad request"}, status=status.HTTP_400_BAD_REQUEST)

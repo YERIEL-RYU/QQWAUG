@@ -9,7 +9,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('auth/token/', obtain_jwt_token),  # 토큰 발급
+    path('auth/token/', obtain_jwt_token),  # 토큰 발급
     path('auth/token/verify/', verify_jwt_token),  # 토큰 확인
     path('auth/token/refresh/', refresh_jwt_token),  # 토큰 재발급
     path('mycar/', include('mycar.urls')),
