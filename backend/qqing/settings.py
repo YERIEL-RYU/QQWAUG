@@ -163,8 +163,8 @@ CORS_ORIGIN_WHITELIST = [
 
 
 JWT_AUTH = {
-    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+    # 'JWT_PAYLOAD_GET_USER_ID_HANDLER':
+    # 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
     'JWT_SECRET_KEY': SECRET_KEY,  # jwt에서 사용할 비밀키 설정 현재 django의 비밀키와 같음
     'JWT_ALGORITHM': 'HS256',  # 암호화에서 사용되는 알고리즘 지정
     'JWT_ALLOW_REFRESH': True,  # 토큰을 갱신 할 수 있는지 여부

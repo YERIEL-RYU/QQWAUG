@@ -11,6 +11,8 @@ from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from .serializers import UserLoginSerializer, UserCreateSerializer, UserSerializer, ProfileSerializer
 from .models import User, Profiles
 
+import json
+
 
 
 class DuplicateUserid(APIView):
@@ -25,7 +27,6 @@ class DuplicateUserid(APIView):
             print('empty')
             return Response({"message": "You can make userid"}, status=status.HTTP_200_OK)
         return Response({"message": "duplicate userid"}, status=status.HTTP_409_CONFLICT)
-
 
 class Profile(APIView):
     permission_classes = (AllowAny,)
@@ -64,6 +65,7 @@ class ProfileDetail(APIView):
         print(request.data)
         profile = self.get_object(userid=userid)
         serializer = ProfileSerializer(profile, data=request.data)
+        print(serializer.is_valid())
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
