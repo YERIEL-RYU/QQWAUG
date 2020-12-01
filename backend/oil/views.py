@@ -48,11 +48,15 @@ class OilListDetail(APIView):
         serializer = OilSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
     def delete(self, request,userid):
         oilid = request.data['oilid']
         queryset = Oil.objects.get(pk=oilid)
-        queryset.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        print(queryset.id)
+        if queryset.id :
+            queryset.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(queryset.errors, status=status.HTTP_409_CONFLICT)
 
 
 class OilDetail(APIView):

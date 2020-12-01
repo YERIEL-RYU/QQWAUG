@@ -17,6 +17,8 @@ const EnginOilInputContainer = (props) => {
     },
     [inputValue],
   );
+
+  //engin oil 등록
   const onClick = useCallback(() => {
     const url = `http://localhost:8000/enginoil/`
     const token = localStorage.getItem('token')
@@ -39,8 +41,8 @@ const EnginOilInputContainer = (props) => {
     })
   }, [inputValue]);
 
+  //enginoil 수정
   const onModify = useCallback(() => {
-    
     const token = localStorage.getItem('token')
     const userid = localStorage.getItem('userid')
     const url = `http://localhost:8000/enginoil/${enginoilId}/`

@@ -60,10 +60,9 @@ const OilToolbarContainer = (props) => {
         window.alert('삭제 되었습니다.');
         window.location.reload()
       }
-      else{
-        window.alert('삭제 할 수 없습니다.')
-      }
-    })
+    }).catch((error)=>
+      window.alert('삭제 할 수 없습니다.')
+    )
   },[selected])
   return (
     <OilToolbarPresenter

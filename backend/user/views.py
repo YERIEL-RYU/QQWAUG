@@ -81,10 +81,11 @@ User = get_user_model()
 def login(request):
     if request.method == 'POST':
         serializer = UserLoginSerializer(data=request.data)
-
+        print(serializer.is_valid())
         if not serializer.is_valid(raise_exception=True):
-            return Response({"message": "Request Body Error."}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"message": "Request Body Error."}, status=status.HTTP_400_BAD_REQUEST)
         if serializer.validated_data['userid'] == "None":
+            print(serializer.validated_data['userid'])
             return Response({'message': 'fail'}, status=status.HTTP_409_CONFLICT)
 
         response = {
@@ -101,11 +102,11 @@ def createUser(request):
     if request.method == 'POST':
         serializer = UserCreateSerializer(data=request.data)
         if not serializer.is_valid(raise_exception=True):
-            return Response({"message": "Request Body Error."}, status=status.HTTP_409_CONFLICT)
+            return Response({"message": "Request Body Error."}, status=status.HTTP_400_BAD_REQUEST)
 
         if User.objects.filter(userid=serializer.validated_data['userid']).first() is None:
             serializer.save()
-            return Response({"message": "ok"}, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED)
         return Response({"message": "duplicate userid"}, status=status.HTTP_409_CONFLICT)
 
 

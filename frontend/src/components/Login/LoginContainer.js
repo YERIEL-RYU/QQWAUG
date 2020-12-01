@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginRequest } from '../../store/reducers/auth';
 
 import LoginPresenter from './LoginPresenter';

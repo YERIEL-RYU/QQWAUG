@@ -41,10 +41,8 @@ export const loginRequest = (userid, password) => {
         password,
       })
       .then((response) => response.data)
-      .then(({ token, refresh, author, userid }) => {
+      .then(({ token, userid }) => {
         localStorage.setItem('token', token);
-        // localStorage.setItem('refresh', refresh);
-        // localStorage.setItem('author', author);
         localStorage.setItem('userid', userid);
         dispatch(loginSuccess(token));
       })

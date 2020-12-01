@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import MyPageFormPresenter from './MyPageFormPresenter';
 import axios from 'axios';
 
@@ -8,10 +7,7 @@ const MypageFormContainer = ({ match, history }) => {
     onTitle();
   }, []);
   const [title, setTitle] = useState('');
-  const [userValue, setUserValue] = useState([{
-    password:'',
-    useremail:''
-  }]);
+  const [userValue, setUserValue] = useState([]);
   const [profileValue, setProfileValue] = useState([]);
   const param = match.params.name;
   const onTitle = useCallback(() => {
@@ -118,7 +114,7 @@ const MypageFormContainer = ({ match, history }) => {
       setProfileValue({[name]: value });
       console.log(name, value);
     }
-  },[userValue]);
+  },[]);
   return (
     <MyPageFormPresenter
       title={title}

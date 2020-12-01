@@ -67,7 +67,7 @@ class UserLoginSerializer(serializers.Serializer):
             jwt_token = JWT_ENCODE_HANDLER(payload)
             print(jwt_token, 'UserLoginSerializer jwt_token')
             update_last_login(None, user)
-        except User.DoesNotExist:
+        except user.DoesNotExist:
             raise serializers.ValidationError(
                 'User with given userid and password does not exists'
             )

@@ -147,20 +147,18 @@ const Join = () => {
         })
         .catch((error) => {
           console.log(error.response);
-          window.alert('회원가입을 할 수 없습니다.')
         });
       const from_data = new FormData();
       from_data.append('userid',userId);
       if(profile_img !== undefined){
         from_data.append('profile_img', profile_img);
       }
-      if(profile_region !== undefined){
+      else if(profile_region !== undefined){
         from_data.append('profile_region', profile_region);
       }
-      if(profile_gender !== undefined) {
+      else if(profile_gender !== undefined) {
         from_data.append('profile_gender', profile_gender);
       }
-      console.log(from_data)
       axios
         .post('http://localhost:8000/users/profile/', from_data, {
           headers:{
@@ -173,7 +171,6 @@ const Join = () => {
         })
         .catch((error) => {
           console.log(error);
-          window.alert('회원 가입을 할 수 없습니다.')
         });
     },
     [joinValue, profileValue, activeStep],
