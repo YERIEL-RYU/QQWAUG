@@ -34,6 +34,7 @@ class Profile(APIView):
     parser_classes = (JSONParser, MultiPartParser)
 
     def post(self, request):
+        print(request.data)
         serializer = ProfileSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

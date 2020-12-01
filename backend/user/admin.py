@@ -28,4 +28,4 @@ class UsersAdmin(admin.ModelAdmin):
 @admin.register(Profiles)
 class ProfilesAdmin(admin.ModelAdmin):
     list_display = ['id', 'userid',
-                    'profile_region', 'image_tag', 'profile_img']
+                    'profile_region', 'image_tag', 'profile_img', 'profile_gender']
