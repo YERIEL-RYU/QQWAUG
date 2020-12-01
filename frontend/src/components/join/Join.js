@@ -147,23 +147,34 @@ const Join = () => {
         })
         .catch((error) => {
           console.log(error.response);
+          window.alert('회원가입을 할 수 없습니다.')
         });
-      if (profileValue !== null) {
-        axios
-          .post('http://localhost:8000/users/profile/', {
-            userid: userId,
-            profile_img: profile_img,
-            profile_gender: profile_gender,
-            profile_region: profile_region,
-          })
-          .then((response) => {
-            console.log(response.data,'profile');
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      const from_data = new FormData();
+      from_data.append('userid',userId);
+      if(profile_img !== undefined){
+        from_data.append('profile_img', profile_img);
       }
-      onNext();
+      if(profile_region !== undefined){
+        from_data.append('profile_region', profile_region);
+      }
+      if(profile_gender !== undefined) {
+        from_data.append('profile_gender', profile_gender);
+      }
+      console.log(from_data)
+      axios
+        .post('http://localhost:8000/users/profile/', from_data, {
+          headers:{
+            "content-Type" :  `multipart/form-data;`
+          }
+        })
+        .then((response) => {
+          console.log(response.data,'profile');
+          onNext();
+        })
+        .catch((error) => {
+          console.log(error);
+          window.alert('회원 가입을 할 수 없습니다.')
+        });
     },
     [joinValue, profileValue, activeStep],
   );
